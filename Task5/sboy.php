@@ -58,7 +58,13 @@ require 'unsetpsession.php';
                                         <td><?php echo $rec['area'] ?></td>
                                         <td><?php echo $rec['password'] ?></td>
                                         <!-- revieweid 	 -->
-                                        <td><i class="fa-solid fa-bars"></i></td>
+                                        <td>
+                                            <!-- <i class="fa-solid fa-bars"></i> -->
+                                            <form name="del<?php echo $i ?>" method="post" action="reviews.php">
+                                                <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-bars"></i></button>
+                                            </form>
+                                        </td>
                                         <td>
                                             <form name="del<?php echo $i ?>" method="post" action="#">
                                                 <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">

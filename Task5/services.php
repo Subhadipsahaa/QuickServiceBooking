@@ -41,7 +41,6 @@ require 'unsetpsession.php';
                         </thead>
                         <tbody>
                             <?php
-
                             $src = "SELECT * FROM services ";
                             $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
                             if (mysqli_num_rows($rs) > 0) {
@@ -59,13 +58,16 @@ require 'unsetpsession.php';
                                             $sql = "SELECT * FROM $tname ";
                                             $res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
                                             ?>
-                                            <select style="width: 100%; height:40px;border:0px;">
+                                            <select style="width: 100%; height:55px;border:0px;">
                                                 <?php
+                                                $j=1;
                                                 if (mysqli_num_rows($res) > 0) {
                                                     while ($reco = mysqli_fetch_assoc($res)) {
+                                                        
                                                 ?>
-                                                        <option><?php echo $reco['plans'] . " " . $reco['price'] ?></option>
+                                                        <option><?php echo "Plan No: ".$j."  ".$reco['plans'] . " , Price-" . $reco['price'] ?></option>
                                                 <?php
+                                                $j++;
                                                     }
                                                 }
                                                 ?>

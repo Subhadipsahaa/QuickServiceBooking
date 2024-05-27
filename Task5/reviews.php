@@ -33,6 +33,8 @@ require 'unsetpsession.php';
                                 <th>User</th>
                                 <th>Reviews</th>
                                 <th>Rating</th>
+                                <th>Time</th>
+                                <th>Date</th>
                                 <th>Service boy</th>
                                 <th>Update</th>
                                 <th>Delete</th>
@@ -41,56 +43,146 @@ require 'unsetpsession.php';
                         <tbody>
                             <?php
                             // r_id u_id content rating sboy_id;
-                            $src = "SELECT * FROM reviews ";
-                            $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
-                            if (mysqli_num_rows($rs) > 0) {
+                            if (isset($_POST['sboyid'])) {
+                                $sboyid = $_POST['sboyid'];
+                                $src = "SELECT * FROM reviews where sboy_id=$sboyid";
+                                $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
+                                if (mysqli_num_rows($rs) > 0) {
 
-                                while ($rec = mysqli_fetch_assoc($rs)) {
+                                    while ($rec = mysqli_fetch_assoc($rs)) {
                             ?>
 
-                                    <tr>
-                                        <td><?php echo $rec['r_id'] ?></td>
-                                        <td>
-                                            <?php $uid=$rec['u_id'] ?>
-                                            <?php
-                                            // r_id u_id content rating sboy_id;
-                                            $src1 = "SELECT u_id,name FROM user";
-                                            $rs1 = mysqli_query($conn, $src1) or die(mysqli_error($conn));
-                                            if (mysqli_num_rows($rs1) > 0) {
+                                        <tr>
+                                            <td><?php echo $rec['r_id'] ?></td>
+                                            <td>
+                                                <?php $uid = $rec['u_id'];
+                                                // r_id u_id content rating sboy_id;
+                                                $src1 = "SELECT u_id,name FROM user";
+                                                $rs1 = mysqli_query($conn, $src1) or die(mysqli_error($conn));
+                                                if (mysqli_num_rows($rs1) > 0) {
 
-                                                while ($rec1 = mysqli_fetch_assoc($rs)) {
-                                                    if($uid==$rec1['u_id']){
-                                                        echo $rec1['name'];
-                                                        break;
+                                                    while ($rec1 = mysqli_fetch_assoc($rs1)) {
+                                                        if ($uid == $rec1['u_id']) {
+                                                            echo $rec1['name'];
+                                                            break;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?php echo $rec['content'] ?></td>
-                                        <td><?php echo $rec['rating'] ?></td>
-                                        <td><?php echo $rec['sboy_id'] ?></td>
-                                        <td>
-                                            <form name="del<?php echo $i ?>" method="post" action="#">
-                                                <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
-                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            </form></i>
-                                        </td>
-                                        <td>
-                                            <form name="del<?php echo $i ?>" method="post" action="#">
-                                                <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
-                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
-                                            </form>
-                                        </td>
+                                                ?>
+                                            </td>
+                                            <td><?php echo $rec['content'] ?></td>
+                                            <td><?php echo $rec['rating'] ?></td>
+                                            <td><?php echo $rec['time'] ?></td>
+                                            <td><?php echo $rec['date'] ?></td>
+                                            <td>
+                                                <?php $sboyid = $rec['sboy_id'];
+                                                // r_id u_id content rating sboy_id;
+                                                $src2 = "SELECT sboy_id,name FROM serviceboys";
+                                                $rs2 = mysqli_query($conn, $src2) or die(mysqli_error($conn));
+                                                if (mysqli_num_rows($rs2) > 0) {
+
+                                                    while ($rec2 = mysqli_fetch_assoc($rs2)) {
+                                                        if ($sboyid == $rec2['sboy_id']) {
+                                                            echo $rec2['name'];
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                ?></td>
+                                            <td>
+                                                <form name="del<?php echo $i ?>" method="post" action="#">
+                                                    <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                    <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form name="del<?php echo $i ?>" method="post" action="#">
+                                                    <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                    <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <tr>
+                                        <td colspan="11" class="text-center"><?php echo "No record Found" ?></td>
                                     </tr>
-                                <?php
+                                    <?php
                                 }
                             } else {
-                                ?>
-                                <tr>
-                                    <td colspan="11" class="text-center"><?php echo "No record Found" ?></td>
-                                </tr>
+                                $src = "SELECT * FROM reviews ";
+                                $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
+                                if (mysqli_num_rows($rs) > 0) {
+
+                                    while ($rec = mysqli_fetch_assoc($rs)) {
+                                    ?>
+
+                                        <tr>
+                                            <td><?php echo $rec['r_id'] ?></td>
+                                            <td>
+                                                <?php $uid = $rec['u_id'];
+                                                // r_id u_id content rating sboy_id;
+                                                $src1 = "SELECT u_id,name FROM user";
+                                                $rs1 = mysqli_query($conn, $src1) or die(mysqli_error($conn));
+                                                if (mysqli_num_rows($rs1) > 0) {
+
+                                                    while ($rec1 = mysqli_fetch_assoc($rs1)) {
+                                                        if ($uid == $rec1['u_id']) {
+                                                            echo $rec1['name'];
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $rec['content'] ?></td>
+                                            <td><?php echo $rec['rating'] ?></td>
+                                            <td><?php echo $rec['time'] ?></td>
+
+                                            <td><?php echo $rec['date'] ?></td>
+
+                                            <td>
+                                                <?php $sboyid = $rec['sboy_id'] ?>
+                                                <?php
+                                                // r_id u_id content rating sboy_id;
+                                                $src2 = "SELECT sboy_id,name FROM serviceboys";
+                                                $rs2 = mysqli_query($conn, $src2) or die(mysqli_error($conn));
+                                                if (mysqli_num_rows($rs2) > 0) {
+
+                                                    while ($rec2 = mysqli_fetch_assoc($rs2)) {
+                                                        if ($sboyid == $rec2['sboy_id']) {
+                                                            echo $rec2['name'];
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                ?></td>
+                                            <td>
+                                                <form name="del<?php echo $i ?>" method="post" action="#">
+                                                    <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                    <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form name="del<?php echo $i ?>" method="post" action="#">
+                                                    <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                    <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <tr>
+                                        <td colspan="11" class="text-center"><?php echo "No record Found" ?></td>
+                                    </tr>
                             <?php
+                                }
                             }
                             ?>
                         </tbody>
