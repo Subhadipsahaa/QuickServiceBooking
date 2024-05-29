@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Screen</title>
+    <link rel="stylesheet" href="css/sstyle.css">
+</head>
+
+<body>
+    <div class="loading-screen">
+        <div>
+            <img logo src="img\logo.png" alt="Logo" style="width: 200px; height: auto; margin-bottom: 90px;">
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <!-- <p>Loading...</p> -->
+    </div>
+
+    <div id="new-content"></div>
+
+    <script>
+        window.addEventListener('load', function () {
+            const loadingBar = document.querySelector('.loading-bar');
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    document.querySelector('.loading-screen').style.display = 'none';
+                    loadNewContent();
+                } else {
+                    width++;
+                    loadingBar.style.width = width + '%';
+                }
+            }, 30);
+        });
+
+        function loadNewContent() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'main.html', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('new-content').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        }
+    </script>
+
+    <div id="footer">
+        <!-- Footer content here -->
+    </div>
+</body>
+
+</html>
