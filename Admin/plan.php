@@ -50,8 +50,8 @@ require_once('sessionchecher.php');
                         <h1 class="display-4"><?php echo capitalizeFirstLetter($tname); ?></h1>
                         <form name="frm" method="post"><!-- enctype="multipart/form-data" -->
                             <div class="form-group">
-                                <label for="p_name">Plan Name</label>
-                                <input type="text" name="p_name" id="p_name" placeholder="Enter Plan" class="form-control">
+                                <label for="p_name">Category Name</label>
+                                <input type="text" name="p_name" id="p_name" placeholder="Enter Catagory" class="form-control">
                             </div>
                             <div class="from-group">
                                 <label for="description">Description</label>

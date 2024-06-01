@@ -1,6 +1,6 @@
 <?php
 require 'Admin/dbcon.php';
-session_start();
+require 'sessionstart.php';
 
 $error_msg = "";
 $res = 0;
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $_SESSION['user'] = $email_id;
+            $_SESSION['muser'] = $email_id;
             $res = 1; // Email exists
         } else {
             $error_msg = "Invalid Email.";
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $_SESSION['user'] = $email_id;
+            $_SESSION['muser'] = $email_id;
             $res = 2; // Email and password are correct
         } else {
             $error_msg = "Invalid Email or Password.";
@@ -45,4 +45,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode(['res' => $res, 'error' => $error_msg]);
     exit();
 }
-?>

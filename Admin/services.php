@@ -32,7 +32,7 @@ require 'unsetpsession.php';
                             <tr>
                                 <th>Service Id</th>
                                 <th>Service Name</th>
-                                <th>Plans</th>
+                                <th colspan="2">Categories</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                                 <!-- <th>Description</th> -->
@@ -60,29 +60,37 @@ require 'unsetpsession.php';
                                             ?>
                                             <select style="width: 100%; height:55px;border:0px;">
                                                 <?php
-                                                $j=1;
+                                                $j = 1;
                                                 if (mysqli_num_rows($res) > 0) {
                                                     while ($reco = mysqli_fetch_assoc($res)) {
-                                                        
+
                                                 ?>
-                                                        <option><?php echo "Plan No: ".$j."  ".$reco['plans'] . " , Price-" . $reco['price'] ?></option>
+                                                        <option><?php echo "No: " . $j . "  " . $reco['plans'] . " , Price-" . $reco['price']; ?></option>
                                                 <?php
-                                                $j++;
+                                                        $j++;
                                                     }
                                                 }
                                                 ?>
                                             </select>
                                         </td>
                                         <td>
-                                            <form name="del<?php echo $i ?>" method="post" action="#">
-                                                <input type="hidden" name="uid" value="<?php echo $rec['s_id'];  ?>">
-                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            </form></i>
+                                            <form name="addcat<?php echo $i ?>" method="post" action="#">
+                                                <input type="hidden" name="serid" value="<?php echo $rec['s_id'];  ?>">
+                                                <button type="submit" class="btn" style="width: 100%;height:100%; font-size:20px;"><i class="fa-regular fa-square-plus"></i></button>
+                                            </form>
                                         </td>
-                                        <td><form name="del<?php echo $i ?>" method="post" action="#">
-                                                <input type="hidden" name="uid" value="<?php echo $rec['s_id'];  ?>">
+                                        <td>
+                                            <form name="update<?php echo $i ?>" method="post" action="#">
+                                                <input type="hidden" name="serid" value="<?php echo $rec['s_id'];  ?>">
+                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form name="del<?php echo $i ?>" method="post" action="delete/servdelete.php">
+                                                <input type="hidden" name="serid" value="<?php echo $rec['s_id'];  ?>">
                                                 <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
-                                            </form></td>
+                                            </form>
+                                        </td>
                                     </tr>
                                 <?php
                                 }

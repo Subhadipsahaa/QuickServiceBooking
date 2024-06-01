@@ -33,8 +33,8 @@ require 'unsetpsession.php';
                                 <th>Name</th>
                                 <th>E-mail</th>
                                 <th>Phone No.</th>
-                                <th>Area</th>
-                                <th>Password</th>
+                                <th>Service Name</th>
+                                <!-- <th>Password</th> -->
                                 <th>Reviews</th>
                                 <th>Update</th>
                                 <th>Delete</th>
@@ -55,9 +55,8 @@ require 'unsetpsession.php';
                                         <td><?php echo $rec['name'] ?></td>
                                         <td><?php echo $rec['email'] ?></td>
                                         <td><?php echo $rec['contact'] ?></td>
-                                        <td><?php echo $rec['area'] ?></td>
-                                        <td><?php echo $rec['password'] ?></td>
-                                        <!-- revieweid 	 -->
+                                        <td><?php echo $rec['service_name'] ?></td>
+                                        <!-- <td><?php //echo $rec['password'] ?></td> -->
                                         <td>
                                             <!-- <i class="fa-solid fa-bars"></i> -->
                                             <form name="del<?php echo $i ?>" method="post" action="reviews.php">
@@ -67,13 +66,13 @@ require 'unsetpsession.php';
                                         </td>
                                         <td>
                                             <form name="del<?php echo $i ?>" method="post" action="#">
-                                                <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
                                                 <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
                                             </form></i>
                                         </td>
                                         <td>
-                                            <form name="del<?php echo $i ?>" method="post" action="#">
-                                                <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                            <form name="del<?php echo $i ?>" method="post" action="delete/sboydelete.php">
+                                                <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
                                                 <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
                                             </form></i>
                                         </td>

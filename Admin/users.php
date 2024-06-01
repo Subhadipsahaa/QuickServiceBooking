@@ -72,7 +72,7 @@ require 'unsetpsession.php';
                                             </form>
                                         </td>
                                         <td>
-                                            <form name="del<?php echo $i ?>" method="post" action="udelete.php">
+                                            <form name="del<?php echo $i ?>" method="post" action="delete/udelete.php">
                                                 <input type="hidden" name="uid" value="<?php echo $rec['u_id'];  ?>">
                                                 <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
                                             </form>

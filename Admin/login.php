@@ -15,7 +15,7 @@ require 'sessionstart.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Title</title>
+    <title>Admin Log-In</title>
 </head>
 
 <body>
@@ -28,53 +28,70 @@ require 'sessionstart.php';
             <form class="frm" method="post">
                 <br>
                 <div class="form-group">
-                    <label for="adminid">Enter Admin Id</label>
-                    <input type="text" name="adminid" id="adminid" class="form-control" placeholder="Enter Your Admin Id" required>
+                    <label for="adminid">Enter Username</label>
+                    <input type="text" name="adminid" id="adminid" class="form-control" placeholder="Enter Your Username" required>
                     <br>
                     <label for="passw">Enter Password</label>
                     <input type="password" name="passw" id="passw" class="form-control" placeholder="Enter Your Password" required>
+                    <div class="fbttn" style="display: flex; justify-content: right;">
+                        <a href="forgot.php" style="text-decoration:none;">Forgot Password?</a>
+                    </div>
                 </div>
                 <br>
                 <div class="text-center">
                     <input type="submit" name="ok" class="btn btn-dark btn-lg " value="Sign In">
                 </div>
                 <br>
+                <!-- <div><a href="register.php"></a></div> -->
             </form>
         </div>
         <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['ok'])) {
-                $admin_id = $_POST['adminid'];
+                $username = $_POST['adminid'];
                 $pwd = $_POST['passw'];
-                //         $src = "SELECT email, password,name FROM user";
-                //         $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
-                //         if (mysqli_num_rows($rs) > 0) {
-                //             while ($rec = mysqli_fetch_assoc($rs)) {
-                // $hashedpassword = $rec['password'];
-                // if ($rec['email'] == $email_id &&  password_verify($pwd, $hashedpassword)) {
-                $adminid = "Admin7212";
-                $vpassword = "1234";
-                if ($adminid == $admin_id &&  $pwd == $vpassword) {
-                    $res = 1;
-                    $_SESSION['user'] = $adminid;
-                    header("refresh:2;url=dashb.php");
+                $src = "SELECT username,password FROM admin WHERE username='$username'";
+                $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
+                // print_r($rs);
+                if (mysqli_num_rows($rs) == 1) {
+                    $rec = mysqli_fetch_assoc($rs);
+                    // if (mysqli_num_rows($rs) > 0) {
+                    //     while ($rec = mysqli_fetch_assoc($rs)) {
+                    // $hashedpassword = $rec['password'];
+                    // if ($rec['email'] == $email_id &&  password_verify($pwd, $hashedpassword)) {
+                    $vpassword = $rec['password'];
+                    $adminid = $rec['username'];
+                    // $vemail = $rec['email'];
+                    if ($pwd == $vpassword) {
+                        $res = 1;
+                        $_SESSION['user'] = $adminid;
+                        header("refresh:1;url=dashb.php");
+                    } else {
+                        $res = 0;
+                    }
                 } else {
-                    $res = 0;
+        ?>
+                    <div class="alert alert-danger" role="alert">
+                        No User found , Contact DBA.
+                    </div>
+                    <?php
                 }
                 // }
                 // echo $_SESSION['user'];
-                if ($res == 1) {
-        ?>
-                    <div class="alert alert-success" role="alert">
-                        Succesfully Log In
-                    </div>
-                <?php
-                } else {
-                ?>
-                    <div class="alert alert-danger" role="alert">
-                        Invalid E-mail or Password
-                    </div>
+                if (isset($res)) {
+                    if ($res == 1) {
+                    ?>
+                        <div class="alert alert-success" role="alert">
+                            Succesfully Log In
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="alert alert-danger" role="alert">
+                            Invalid Username or Password
+                        </div>
         <?php
+                    }
                 }
             }
         }

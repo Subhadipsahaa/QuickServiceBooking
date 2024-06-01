@@ -97,7 +97,7 @@ require 'unsetpsession.php';
                                                 </form>
                                             </td>
                                             <td>
-                                                <form name="del<?php echo $i ?>" method="post" action="#">
+                                                <form name="del<?php echo $i ?>" method="post" action="delete/rdelete.php">
                                                     <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
                                                     <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
                                                 </form>
@@ -124,7 +124,6 @@ require 'unsetpsession.php';
                                             <td><?php echo $rec['r_id'] ?></td>
                                             <td>
                                                 <?php $uid = $rec['u_id'];
-                                                // r_id u_id content rating sboy_id;
                                                 $src1 = "SELECT u_id,name FROM user";
                                                 $rs1 = mysqli_query($conn, $src1) or die(mysqli_error($conn));
                                                 if (mysqli_num_rows($rs1) > 0) {
@@ -163,13 +162,13 @@ require 'unsetpsession.php';
                                                 ?></td>
                                             <td>
                                                 <form name="del<?php echo $i ?>" method="post" action="#">
-                                                    <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                    <input type="hidden" name="rid" value="<?php echo $rec['sboy_id'];  ?>">
                                                     <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
                                                 </form>
                                             </td>
                                             <td>
-                                                <form name="del<?php echo $i ?>" method="post" action="#">
-                                                    <input type="hidden" name="uid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                <form name="del<?php echo $i ?>" method="post" action="delete/rdelete.php">
+                                                    <input type="hidden" name="rid" value="<?php echo $rec['r_id'];  ?>">
                                                     <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
                                                 </form>
                                             </td>
