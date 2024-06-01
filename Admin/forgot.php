@@ -107,8 +107,16 @@ require 'sessionstart.php';
                         </html>
                         ";
                         $headers = "From: QuickServiceBooking<quickservicebooking.care@gmail.com>\r\n";
+                        $headers .= "Reply-To: quickservicebooking.care@gmail.com\r\n";
                         $headers .= "MIME-Version: 1.0\r\n";
                         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                        
+                        
+                        // $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+                        // $headers = "From: Sreeja De <de.sreeja2003@gmail.com>\r\n";
+                        // $headers .= "MIME-Version: 1.0\r\n";
+
+
 
                         if (mail($to_email, $subject, $body, $headers)) {
                             $res = 1;
