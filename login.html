@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <button type="button" class=" btn-primary" data-toggle="modal" data-target="#exampleModal">Open modal</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Open modal</button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" data-keyboard="true"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -29,37 +29,56 @@
                     <form method="post" class="form" id="loginForm">
                         <div id="emailSection">
                             <div>
-                                <h3 class="heading">Sign Up/Sign In</Input></h3>
+                                <h3 class="heading">Sign Up/Sign In</h3>
                             </div>
                             <div class="input">
                                 <label for="email">Enter your Email:</label>
-
                                 <input type="email" class="ibox" name="email" id="email" placeholder="Email" required>
-
+                                <span class="error-message" id="emailError"></span><br>
                             </div>
-
                             <div class="btn1">
                                 <button type="button" class="bttn" id="nextButton">Next</button>
                             </div>
                         </div>
-
+                        <div id="nameSection" style="display: none;">
+                            <div class="input">
+                                <label for="name">Enter your Name:</label>
+                                <input type="text" class="ibox" name="name" id="name" placeholder="Name">
+                                <span class="error-message" id="nameError"></span><br>
+                            </div>
+                            <div class="input">
+                                <label for="contact">Enter your Contact:</label>
+                                <input type="text" class="ibox" name="contact" id="contact" placeholder="Contact">
+                                <span class="error-message" id="contactError"></span><br>
+                            </div>
+                            <div class="btn1">
+                                <button type="button" class="bttn" id="nextButton2">Next</button>
+                            </div>
+                        </div>
+                        <div id="registerSection" style="display: none;">
+                            <div class="input">
+                                <label for="rpassword">Enter your password:</label>
+                                <input type="password" class="ibox" name="rpassword" id="rpassword"
+                                    placeholder="Password" required>
+                            </div>
+                            <div class="btn1">
+                                <button type="button" class="bttn" name="register" id="registerButton">Register</button>
+                                <!-- <input type="submit" class="bttn" name="ok" value=""> -->
+                            </div>
+                        </div>
                         <div id="passwordSection" style="display: none;">
                             <div class="input">
                                 <label for="password">Enter your password:</label>
-                                <input type="password" class="ibox" name="password" id="password" placeholder="Password"
-                                    required>
+                                <input type="password" class="ibox" name="password" id="password"
+                                    placeholder="Password">
                                 <div class="pbttn">
                                     <a class="pbtn" href="register.php">Forgot Password</a>
                                 </div>
                             </div>
-
                             <div class="btn1">
                                 <input type="submit" class="bttn" name="ok" value="Sign In">
                             </div>
                         </div>
-                        <!-- <div class="rdiv">
-                            Not Registered? <a class="rbtn" href="register.html">Click Here</a>
-                        </div> -->
                     </form>
                 </div>
             </div>
@@ -70,34 +89,108 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script>
+        function isValidEmail(email) {
+            // Regular expression for validating email format
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
         $(document).ready(function () {
             // Function to remove error messages
             function removeErrorMessages() {
                 $('.alert').remove(); // Remove existing error messages
             }
-
             $('#exampleModal').on('shown.bs.modal', function () {
                 $('#email').focus(); // Autofocus on the email input field
             });
-
 
             // Event listener for input fields
             $('#email, #password').on('input', function () {
                 removeErrorMessages(); // Remove error messages when the user starts typing again
             });
 
+            $('#email').on('input', function () {
+                removeErrorMessages(); // Remove error messages when the user starts typing again
+                $('#emailError').text('');
+            });
+
+            $('#name').on('input', function () {
+                $('#nameError').text('');
+                removeErrorMessages();
+            });
+
+            $('#contact').on('input', function () {
+                $('#contactError').text('');
+                removeErrorMessages();
+            });
+
             $('#nextButton').on('click', function () {
-                var email = $('#email').val();
-                if (email) {
+                var email = $('#email').val().trim(); // Trim whitespace
+                if (email && isValidEmail(email)) {
                     $.ajax({
-                        url: 'validation.php', // current script URL
+                        url: 'valid.php', // current script URL
                         method: 'POST',
-                        data: { email: email },
+                        data: {
+                            email: email
+                        },
                         success: function (response) {
                             if (response.res == 1) {
                                 $('#emailSection').hide();
                                 $('#passwordSection').show();
                                 $('#password').focus();
+                            } else if (response.res == 3) {
+                                $('#emailSection').hide();
+                                $('#nameSection').show();
+                                $('#name').focus();
+                            } else {
+                                removeErrorMessages(); // Remove existing error messages
+                                $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
+                            }
+                        },
+                        error: function () {
+                            removeErrorMessages(); // Remove existing error messages
+                            $('.modal-body').prepend('<div class="alert alert-danger" role="alert">An error occurred. Please try again later.</div>');
+                        }
+                    });
+                } else {
+                    $('#emailError').text('Please enter a valid email address.');
+                }
+            });
+
+            $('#nextButton2').on('click', function () {
+                var name = $('#name').val();
+                var contact = $('#contact').val();
+                var nameError = $('#nameError');
+                var contactError = $('#contactError');
+                var isValid = true;
+                if (name.trim() === '') {
+                    nameError.text('Please fill in the name field.');
+                    isValid = false;
+                } else {
+                    nameError.text('');
+                }
+
+                if (contact.trim() === '') {
+                    contactError.text('Please fill in the contact field.');
+                    isValid = false;
+                } else {
+                    contactError.text('');
+                }
+
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if there are errors
+                } else {
+                    $.ajax({
+                        url: 'valid.php',
+                        method: 'post',
+                        data: {
+                            name: name,
+                            contact: contact
+                        },
+                        success: function (response) {
+                            if (response.res == 4) {
+                                $('#nameSection').hide();
+                                $('#registerSection').show();
+                                $('#rpassword').focus();
                             } else {
                                 removeErrorMessages(); // Remove existing error messages
                                 $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
@@ -110,13 +203,22 @@
                     });
                 }
             });
+
             $(document).on('keydown', function (event) {
                 if (event.which === 13) { // Check if Enter key is pressed
-                    event.preventDefault(); // Prevent the default form submission behavior
-                    $('#nextButton').click(); // Trigger next button click event
-                    $('#loginForm').submit(); // Submit the form
+                    if ($('#emailSection').is(':visible')) {
+                        $('#nextButton').click(); // Trigger next button click event for email section
+                    } else if ($('#nameSection').is(':visible')) {
+                        $('#nextButton2').click(); // Trigger next button click event for name section
+                    } else if ($('#registerSection').is(':visible')) {
+                        $('#registerButton').click(); // Trigger register button click event
+                    } else if ($('#passwordSection').is(':visible')) {
+                        $('#loginForm').submit(); // Submit the form for password section
+                    }
                 }
             });
+
+
 
 
             $('#loginForm').on('submit', function (event) {
@@ -127,12 +229,65 @@
 
                 if (email && password) {
                     $.ajax({
-                        url: 'validation.php', // current script URL
+                        url: 'valid.php', // current script URL
                         method: 'POST',
-                        data: { email: email, password: password },
+                        data: {
+                            email: email,
+                            password: password
+                        },
                         success: function (response) {
+                            console.log(response);
+
                             if (response.res == 2) {
-                                window.location.href = 'register.html'; // Redirect to the target page
+                                // Redirect to the target page if login is successful
+                                window.location.href = 'main.php';
+                            } else {
+                                // Display error message if login is unsuccessful
+                                removeErrorMessages();
+                                $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
+                            }
+                        },
+                        error: function () {
+                            removeErrorMessages(); // Remove existing error messages
+                            $('.modal-body').prepend('<div class="alert alert-danger" role="alert">An error occurred. Please try again later.</div>');
+                        }
+                    });
+                }
+            });
+
+
+
+
+
+            $('#registerButton').on('click', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var email = $('#email').val();
+                var rpassword = $('#rpassword').val();
+                var name = $('#name').val();
+                var contact = $('#contact').val();
+
+                if (email && rpassword && name && contact) {
+                    $.ajax({
+                        url: 'valid.php',
+                        method: 'POST',
+                        data: {
+                            email: email,
+                            rpassword: rpassword,
+                            name: name,
+                            contact: contact
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response.res == 5) {
+                                // $('#registerSection').hide();
+                                $('#registerSection').hide();
+                                $('#passwordSection').hide();
+                                $('#nameSection').hide();
+                                $('#emailSection').show();
+                                $('#email').focus(); // Redirect to the target page
+                                // Redirect to the target page if registration is successful
+                                // window.location.href = 'main.php';
                             } else {
                                 removeErrorMessages(); // Remove existing error messages
                                 $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
@@ -145,9 +300,8 @@
                     });
                 }
             });
+
         });
-
-
     </script>
 </body>
 

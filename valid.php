@@ -10,10 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'] ?? null;
     $name = $_POST['name'] ?? null;
     $contact = $_POST['contact'] ?? null;
-    $rpassword = $_POST['rpassword'] ?? null;
+    $rpassword=$_POST['rpassword'] ?? null;
 
-
+    
     if ($email_id && !$password) {
+        // Check if email exists
         $stmt = $conn->prepare("SELECT email FROM user WHERE email = ?");
         $stmt->bind_param("s", $email_id);
         $stmt->execute();
@@ -21,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->num_rows > 0) {
             // $_SESSION['muser'] = $email_id;
-            $res = 1; 
+            $res = 1; // Email exists
         } else {
             $res = 3;
             $error_msg = "Invalid Email.";
@@ -42,30 +43,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->num_rows > 0) {
             $_SESSION['muser'] = $email_id;
-            $res = 2;
+            $res = 2; // Email and password are correct
         } else {
-            $res = 7;
+            $res=7;
             $error_msg = "Invalid Email or Password.";
         }
         $stmt->close();
     }
 
-    if ($email_id && $name && $contact && $rpassword) {
+    if($email_id && $name && $contact && $rpassword ){
         $stmt = $conn->prepare("INSERT INTO `user` ( `name`, `email`, `contact`, `password`) VALUES ( ?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $name, $email_id, $contact, $rpassword);
+        $stmt->bind_param("ssss",$name, $email_id, $contact, $rpassword);
         $stmt->execute();
         $stmt->store_result();
-
+    
         if ($stmt->affected_rows > 0) {
-
-            $res = 5;
-            $email_id = null;
-            $password = null;
-            $name =  null;
-            $contact = null;
-            $rpassword = null;
-            $error_msg = "";
-            $res = 0;
+            $res = 5; // Email exists
         } else {
             $res = 6;
             $error_msg = "Invalid Email.";
