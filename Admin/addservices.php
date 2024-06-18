@@ -27,32 +27,45 @@ require_once('sessionchecher.php');
                 </div>
                 <div class="col-12">
                     <div class="col-6">
-                        <form name="frm" method="post" ><!-- enctype="multipart/form-data" -->
+                        <form name="frm" method="post"><!-- enctype="multipart/form-data" -->
                             <div class="form-group">
                                 <label for="s_name">Service Name</label>
-                                <input type="text" name="s_name" id="s_name" class="form-control">
+                                <input type="text" name="s_name" id="s_name" class="form-control" required>
                             </div>
                             <div class="from-group mt-3">
-                                <input type="submit" name="ok" value="Add Services" class="btn btn-primary">
+                                <input type="submit" name="ok" value="Add Services" class="btn btn-dark">
                             </div>
                         </form>
                         <?php
                         if (isset($_POST['ok'])) {
                             $service_name = $_POST['s_name'];
-                            if (isset($service_name))
-                                $src = "INSERT INTO `services` (`service_name`) VALUES ( '$service_name') ";
-                            $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
-                            if ($rs == 1) {
-                                $_SESSION['service_name']=$service_name;
-                                $sql = "CREATE TABLE `quickservicebooking`. $service_name (`p_id` INT(255) NOT NULL AUTO_INCREMENT , `plans` VARCHAR(255) NOT NULL , `description` VARCHAR(255) NOT NULL , `price` VARCHAR(255) NOT NULL , `s_id` INT(255) NOT NULL , UNIQUE `1` (`p_id`)) ENGINE = InnoDB; ";
-                                $rsc = mysqli_query($conn, $sql) or die(mysqli_error($conn));;
-                                if ($rsc == 1) {
-                                    ?>
-                                    <script>
-                                        window.location.href="plan.php";
-                                    </script>
-                                    <?php
+                            $src1 = "SELECT * FROM services WHERE service_name ='$service_name'";
+                            $resu = mysqli_query($conn, $src1) or die(mysqli_error($conn));
+                            if (mysqli_num_rows($resu) == 0) {
+                                if (isset($service_name)) {
+                                    $src = "INSERT INTO `services` (`service_name`) VALUES ( '$service_name') ";
+                                    $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
+                                    if ($rs == 1) {
+                                        $_SESSION['service_name'] = $service_name;
+                                        $sql = "CREATE TABLE `quickservicebooking`. $service_name (`p_id` INT(255) NOT NULL AUTO_INCREMENT , `plans` VARCHAR(255) NOT NULL, `price` VARCHAR(255) NOT NULL , `s_id` INT(255) NOT NULL , UNIQUE `1` (`p_id`)) ENGINE = InnoDB; ";
+                                        $rsc = mysqli_query($conn, $sql) or die(mysqli_error($conn));;
+                                        if ($rsc == 1) {
+                        ?>
+                                            <script>
+                                                window.location.href = "plan.php";
+                                            </script>
+                                <?php
+                                        }
+                                    }
                                 }
+                            } else {
+                                ?>
+                                <br>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Hi! Admin</strong>The service is already exist. 
+                                </div>
+
+                        <?php
                             }
                         }
                         ?>

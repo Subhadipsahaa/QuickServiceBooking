@@ -1,6 +1,6 @@
 <?php
-require 'Admin/dbcon.php';
-require 'sessionstart.php';
+// require 'Admin/dbcon.php';
+// require 'sessionstart.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,121 +17,110 @@ require 'sessionstart.php';
 </head>
 
 <body>
-    <?php
-    if (isset($_SESSION['muser'])) {
-        $uemail_id = $_SESSION['muser'];
-        $src2 = "SELECT u_id ,name ,contact ,area ,city ,dist ,state ,pin,landmark FROM user WHERE  email='$uemail_id'";
-        $rs2 = mysqli_query($conn, $src2) or die(mysqli_error($conn));
-        if (mysqli_num_rows($rs2) > 0) {
-            $rec2 = mysqli_fetch_assoc($rs2);
-        }
-    }
-    ?>
-    <div class="navwrapper">
-        <nav class="navbar">
-            <ul>
-                <!-- <li class="navele"><button type="button" class="nnavbtn"><img src="img/logo.png" alt="logopng" style="width: 150px; height: 55px;"></button></li> -->
-                <li class="navele"><button type="button" class="nnavbtn" style="position: absolute; left:5vh; top:5px"><a href="hello.html"><img src="img/logo.png" alt="logopng" style="width: 100px; height: 55px;"></a></button></li>
-                <!-- <li class="navele"><button type="button" class="nnavbtn">News</button></li>
-                <li class="navele"><button type="button" class="nnavbtn">Contact</button></li> -->
-                <?php
-                if (isset($_SESSION['muser'])) {
-                ?>
-                    <!-- <button type="button" class="nnavbtn">Profile</button> -->
-                    <!-- <li class='navele photo'>
-                        <i class="fa-solid fa-user icon1"></i>
-                         <img src="img/slide/img1.jpg" alt="" class="icon1">
-                        <</button> 
-                    </li> -->
-                    <li class="navele">
-                        <a class=" dropdown-toggle nnavbtn" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="display:inline;">
-                        <span class='navele photo' style="position:absolute; top :-2px; right:105%;"><i class='fa-solid fa-user icon1'></i></span> 
-                            <?php echo "Hi, " . $rec2['name']; ?>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="logout.php">Log Out</a>
-                        </div>
+    <main class="ncontainer">
+        <?php require 'menu.php' ?>
+        <div class="divbox">
+            <div class="imgslider">
+                <form class="searchsection">
+                    <div class="icon">
+                        <i class="fa-solid fa-magnifying-glass sericon"></i>
+                    </div>
+                    <input class="sinput" type="search" placeholder="Search Services" aria-label="Search">
+                    <button class="sbtn" type="submit">Search</button>
 
-                    <?php
-                } else {
-                    ?>
-                        <button type="button" class="lnnavbtn" data-toggle="modal" data-target="#exampleModal" >Log in</button>
-                    <?php
-                }
-                    ?>
-                    </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="divbox">
-        <div class="imgslider">
-            <form class="searchsection">
-                <div class="icon">
-                    <i class="fa-solid fa-magnifying-glass sericon"></i>
-                </div>
-                <input class="sinput" type="search" placeholder="Search Services" aria-label="Search">
-                <button class="sbtn" type="submit">Search</button>
-
-            </form>
-        </div>
-    </div>
-    <div class="divservices">
-        <div class="service">
-            <div class="seritem">
-                <div class="iconwrap"> <img src="img\service_icons\women.jpeg" alt="icon.png" class="sicon">
-                </div>
-                <div>
-                    <p class="itemname">Women</p>
-                    <!-- 's Salon & Spa -->
-                </div>
+                </form>
             </div>
-            <div class="seritem">
+        </div>
+        <div class="divservices">
+            <div class="service">
+                <a href="service/manwomen.php" class="servicebtn">
+                    <div class="seritem">
+                        <div class="iconwrap"> <img src="img\service_icons\women.png" alt="icon.png" class="sicon">
+                        </div>
+                        <div>
+                            <p class="itemname">Women & Men</p>
+                            <!-- 's Salon & Spa -->
+                        </div>
+                    </div>
+                </a>
+                <!-- <div class="seritem">
                 <div class="iconwrap"> <img src="img\service_icons\man.jpeg" alt="icon.png" class="sicon">
                 </div>
                 <div>
-                    <p class="itemname">Men</p>
-                    <!-- 's Salon & Massage -->
-                </div>
-            </div>
-            <div class="seritem">
-                <div class="iconwrap"> <img src="img\service_icons\clean.jpeg" alt="icon.png" class="sicon">
-                </div>
-                <div>
-                    <p class="itemname"> Cleaning</p>
-                </div>
-            </div>
-            <div class="seritem">
-                <div class="iconwrap"> <img src="img\service_icons\applince.jpeg" alt="icon.png" class="sicon">
-                </div>
-                <div>
-                    <p class="itemname"> Appliance Repair</p>
-                </div>
-            </div>
-            <!-- <div class="seritem">
-                <div class="iconwrap"> <img src="img\service_icons\pinting.jpeg" alt="icon.png" class="sicon">
-                </div>
-                <div>
-                    <p class="itemname">Painting</p>
-                </div>
+                    <p class="itemname">Men</p> -->
+                <!-- 's Salon & Massage -->
+                <!-- </div>
             </div> -->
-            <div class="seritem">
-                <div class="iconwrap"> <img src="img\service_icons\other.jpeg" alt="icon.png" class="sicon">
+                <div class="seritem">
+                    <div class="iconwrap"> <img src="img\service_icons\clean.jpeg" alt="icon.png" class="sicon">
+                    </div>
+                    <div>
+                        <p class="itemname"> Cleaning</p>
+                    </div>
                 </div>
-                <div>
-                    <p class="itemname">More..</p>
-                    <!-- Electrician, Plumber & Carpenter -->
+                <div class="seritem">
+                    <div class="iconwrap"> <img src="img\service_icons\applince.jpeg" alt="icon.png" class="sicon">
+                    </div>
+                    <div>
+                        <p class="itemname"> Appliance Repair</p>
+                    </div>
+                </div>
+                <div class="seritem">
+                    <div class="iconwrap"> <img src="img\service_icons\pinting.jpeg" alt="icon.png" class="sicon">
+                    </div>
+                    <div>
+                        <p class="itemname">Painting</p>
+                    </div>
+                </div>
+                <div class="seritem">
+                    <div class="iconwrap"> <img src="img\service_icons\other.jpeg" alt="icon.png" class="sicon">
+                    </div>
+                    <div>
+                        <p class="itemname">Electrician, Plumber & Carpenter</p>
+                        <!-- Electrician, Plumber & Carpenter -->
+                    </div>
                 </div>
             </div>
         </div>
-
-    </div>
-    <div>
-        <?php //print_r($rec2) ; 
-        ?>
-    </div>
-    <main class="ncontainer">
+        <div class="wrapserviceworker">
+            <h3 class="workerheading">Most booked services</h3>
+            <div class="serviceworker">
+                <div class="worker">
+                    <img class="workerphoto" src="img/worker/img1.jpg">
+                    <div class="middle">
+                        <div class="text">Carpainter</div>
+                    </div>
+                </div>
+                <div class="worker">
+                    <img class="workerphoto" src="img/worker/img2.jpg">
+                    <div class="middle">
+                        <div class="text">Plumber</div>
+                    </div>
+                </div>
+                <div class="worker">
+                    <img class="workerphoto" src="img/worker/img3.jpg">
+                    <div class="middle">
+                        <div class="text">Electricians</div>
+                    </div>
+                </div>
+                <div class="worker">
+                    <img class="workerphoto" src="img/worker/img4.jpg">
+                    <div class="middle">
+                        <div class="text">Car Mechanic</div>
+                    </div>
+                </div>
+                <div class="worker">
+                    <img class="workerphoto" src="img/worker/img5.jpg">
+                    <div class="middle">
+                        <div class="text">Cleaning</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <?php //print_r($rec2) ; 
+            ?>
+        </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" data-keyboard="true" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content divpop">
@@ -173,7 +162,7 @@ require 'sessionstart.php';
                             <div id="registerSection" style="display: none;">
                                 <div class="input">
                                     <label for="rpassword">Enter your password:</label>
-                                    <input type="password" class="ibox" name="rpassword" id="rpassword" placeholder="Password" required>
+                                    <input type="password" class="ibox" name="rpassword" id="rpassword" placeholder="Password">
                                 </div>
                                 <div class="btn1">
                                     <button type="button" class="bttn" name="register" id="registerButton">Register</button>
@@ -192,34 +181,123 @@ require 'sessionstart.php';
                                     <input type="submit" class="bttn" name="ok" value="Sign In">
                                 </div>
                             </div>
+                            <div id="otpSection" style="display: none;">
+                                <div>
+                                    <h3 class="heading"> Please Verify Your Email</h3>
+                                </div>
+                                <label for="otp">Enter your One-Time-Password:</label><br>
+                                <div class="otpsec">
+                                    <div class="input">
+                                        <input type="text" class="otp" name="otp[]" id="otp1" minlength="0" maxlength="1" pattern="[0-9]{0,1}">
+                                        <input type="text" class="otp" name="otp[]" id="otp2" minlength="0" maxlength="1" pattern="[0-9]{0,1}" disabled>
+                                        <input type="text" class="otp" name="otp[]" id="otp3" minlength="0" maxlength="1" pattern="[0-9]{0,1}" disabled>
+                                        <input type="text" class="otp" name="otp[]" id="otp4" minlength="0" maxlength="1" pattern="[0-9]{0,1}" disabled>
+                                        <input type="text" class="otp" name="otp[]" id="otp5" minlength="0" maxlength="1" pattern="[0-9]{0,1}" disabled>
+                                        <input type="text" class="otp" name="otp[]" id="otp6" minlength="0" maxlength="1" pattern="[0-9]{0,1}" disabled><br>
+                                        <span class="error-message" id="otpError"></span>
+                                    </div>
+                                    <div class="pbttn">
+                                        <button type="button" class="btn btn-dark pbtn" id="sendButton" name="sendButton" value="send" style="position: relative;left: 10px;top: 2px;">Send</button>
+                                    </div>
+                                </div>
+                                <div class="btn1">
+                                    <button type="button" class="bttn" id="verifyButton">Verify</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
         <script>
+            const otpInputs = document.querySelectorAll("#otpSection input");
+            const button = document.querySelector("#otpSection button");
+
+            // iterate over all otpInputs
+            otpInputs.forEach((input, index1) => {
+                input.addEventListener("keyup", (e) => {
+                    const currentInput = input;
+                    const nextInput = input.nextElementSibling;
+                    const prevInput = input.previousElementSibling;
+
+                    // if the value has more than one character then clear it
+                    if (currentInput.value.length > 1) {
+                        currentInput.value = "";
+                        return;
+                    }
+
+                    // if the next input is disabled and the current value is not empty
+                    // enable the next input and focus on it
+                    if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+                        nextInput.removeAttribute("disabled");
+                        nextInput.focus();
+                    }
+
+                    // if the backspace key is pressed
+                    if (e.key === "Backspace") {
+                        // If the current input is empty and there's a previous input, move focus to the previous input
+                        if (currentInput.value === "" && prevInput) {
+                            prevInput.focus();
+                        }
+                        // Clear the value of the current input
+                        currentInput.value = "";
+
+                        // Check if all otpInputs are empty
+                        const allInputsEmpty = Array.from(otpInputs).every(input => input.value === "");
+
+                        // Disable all otpInputs except the first if all inputs are empty
+                        if (allInputsEmpty) {
+                            otpInputs.forEach((input, index) => {
+                                if (index !== 0) {
+                                    input.setAttribute("disabled", true);
+                                }
+                            });
+                        } else {
+                            // Enable all otpInputs
+                            otpInputs.forEach(input => input.removeAttribute("disabled"));
+                        }
+                    }
+
+                    // if the fourth input (which index number is 3) is not empty and has no disable attribute
+                    // add active class to button, otherwise remove active class
+                    if (!otpInputs[3].disabled && otpInputs[3].value !== "") {
+                        button.classList.add("active");
+                        return;
+                    }
+                    button.classList.remove("active");
+                });
+            });
+
+            //focus the first input which index is 0 on window load
+            window.addEventListener("load", () => otpInputs[0].focus());
+
             function isValidEmail(email) {
+                // Regular expression for validating email format
                 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return emailRegex.test(email);
             }
             $(document).ready(function() {
+                $('#otpSection').hide();
+                // $('#loadingSection').hide();
+                // Function to remove error messages
                 function removeErrorMessages() {
-                    $('.alert').remove();
+                    $('.alert').remove(); // Remove existing error messages
                 }
                 $('#exampleModal').on('shown.bs.modal', function() {
-                    $('#email').focus(); 
+                    $('#email').focus(); // Autofocus on the email input field
                 });
 
+                // Event listener for input fields
                 $('#email, #password').on('input', function() {
-                    removeErrorMessages();
+                    removeErrorMessages(); // Remove error messages when the user starts typing again
                 });
 
                 $('#email').on('input', function() {
-                    removeErrorMessages(); 
+                    removeErrorMessages(); // Remove error messages when the user starts typing again
                     $('#emailError').text('');
                 });
 
@@ -234,15 +312,16 @@ require 'sessionstart.php';
                 });
 
                 $('#nextButton').on('click', function() {
-                    var email = $('#email').val().trim(); 
+                    var email = $('#email').val().trim(); // Trim whitespace
                     if (email && isValidEmail(email)) {
                         $.ajax({
-                            url: 'valid.php',
+                            url: 'validation.php', // current script URL
                             method: 'POST',
                             data: {
                                 email: email
                             },
                             success: function(response) {
+                                console.log(response);
                                 if (response.res == 1) {
                                     $('#emailSection').hide();
                                     $('#passwordSection').show();
@@ -252,12 +331,12 @@ require 'sessionstart.php';
                                     $('#nameSection').show();
                                     $('#name').focus();
                                 } else {
-                                    removeErrorMessages(); 
+                                    removeErrorMessages(); // Remove existing error messages
                                     $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
                                 }
                             },
                             error: function() {
-                                removeErrorMessages();
+                                removeErrorMessages(); // Remove existing error messages
                                 $('.modal-body').prepend('<div class="alert alert-danger" role="alert">An error occurred. Please try again later.</div>');
                             }
                         });
@@ -287,10 +366,10 @@ require 'sessionstart.php';
                     }
 
                     if (!isValid) {
-                        event.preventDefault();
+                        event.preventDefault(); // Prevent form submission if there are errors
                     } else {
                         $.ajax({
-                            url: 'valid.php',
+                            url: 'validation.php',
                             method: 'post',
                             data: {
                                 name: name,
@@ -302,12 +381,12 @@ require 'sessionstart.php';
                                     $('#registerSection').show();
                                     $('#rpassword').focus();
                                 } else {
-                                    removeErrorMessages();
+                                    removeErrorMessages(); // Remove existing error messages
                                     $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
                                 }
                             },
                             error: function() {
-                                removeErrorMessages(); 
+                                removeErrorMessages(); // Remove existing error messages
                                 $('.modal-body').prepend('<div class="alert alert-danger" role="alert">An error occurred. Please try again later.</div>');
                             }
                         });
@@ -315,31 +394,78 @@ require 'sessionstart.php';
                 });
 
                 $(document).on('keydown', function(event) {
-                    if (event.which === 13) { 
+                    if (event.which === 13) { // Check if Enter key is pressed
                         if ($('#emailSection').is(':visible')) {
-                            $('#nextButton').click();
+                            $('#nextButton').click(); // Trigger next button click event for email section
                         } else if ($('#nameSection').is(':visible')) {
-                            $('#nextButton2').click();
+                            $('#nextButton2').click(); // Trigger next button click event for name section
                         } else if ($('#registerSection').is(':visible')) {
-                            $('#registerButton').click();
+                            $('#registerButton').click(); // Trigger register button click event
                         } else if ($('#passwordSection').is(':visible')) {
-                            $('#loginForm').submit();
+                            $('#loginForm').submit(); // Submit the form for password section
+                        } else if ($('#loginForm').is(':visible')) {
+                            $('#loginForm').click(); // Submit the form for password section
                         }
                     }
                 });
 
 
+                $('#verifyButton').on('click', function() {
+                    // Retrieve the entered OTP values from the input fields
+                    var otpValues = [];
+                    $('.otp').each(function() {
+                        otpValues.push($(this).val());
+                    });
+
+                    // Join the OTP values into a single string
+                    var otp = otpValues.join('');
+                    var email = $('#email').val();
+                    var password = $('#password').val(); // Corrected variable name to 'rpassword'
+
+                    // Log the values for debugging
+                    console.log("Email:", email);
+                    console.log("OTP:", otp);
+
+                    // Enable all OTP input fields
+                    $('.otp').removeAttr('disabled');
+
+                    // AJAX request to verify the OTP
+                    $.ajax({
+                        url: 'validation.php', // Replace 'validation.php' with the actual backend URL for OTP verification
+                        method: 'POST',
+                        data: {
+                            email: email,
+                            password: password, // Corrected variable name to 'rpassword'
+                            otp: otp
+                        },
+                        success: function(response) {
+                            // Handle the response from the server
+                            console.log(response);
+                            if (response.res == 10) {
+                                // If OTP verification is successful, redirect to the main page or perform any other action
+                                window.location.href = 'main.php';
+                            } else {
+                                // If OTP verification fails, display an error message
+                                $('#otpError').text('Invalid OTP. Please try again.');
+                            }
+                        },
+                        error: function() {
+                            // Handle errors in the AJAX request
+                            $('#otpError').text('An error occurred while verifying the OTP. Please try again later.');
+                        }
+                    });
+                });
 
 
                 $('#loginForm').on('submit', function(event) {
-                    event.preventDefault();
+                    event.preventDefault(); // Prevent the default form submission
 
                     var email = $('#email').val();
                     var password = $('#password').val();
 
                     if (email && password) {
                         $.ajax({
-                            url: 'valid.php',
+                            url: 'validation.php', // current script URL
                             method: 'POST',
                             data: {
                                 email: email,
@@ -347,25 +473,58 @@ require 'sessionstart.php';
                             },
                             success: function(response) {
                                 console.log(response);
+
                                 if (response.res == 2) {
+                                    // Redirect to the target page if login is successful
                                     window.location.href = 'main.php';
+                                } else if (response.res == 9) {
+                                    $('#passwordSection').hide();
+                                    $('#otpSection').show();
                                 } else {
+                                    // Display error message if login is unsuccessful
                                     removeErrorMessages();
                                     $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
                                 }
                             },
-                            error: function() {
-                                removeErrorMessages();
-                                $('.modal-body').prepend('<div class="alert alert-danger" role="alert">An error occurred. Please try again later.</div>');
-                            }
+                            // error: function() {
+                            //     removeErrorMessages(); // Remove existing error messages
+                            //     $('.modal-body').prepend('<div class="alert alert-danger" role="alert">An error occurred. Please try again later.</div>');
+                            // }
                         });
                     }
                 });
 
 
 
+                // $("#sendButton").click(function () {
+                $('#sendButton').on('click', function(event) {
+                    // Disable the button to prevent multiple clicks
+                    $(this).prop("disabled", true);
+                    var email = $('#email').val();
+                    var send = $('#sendButton').val();
+                    // Make the AJAX request to PHP backend
+                    $.ajax({
+                        url: "validation.php",
+                        type: "POST",
+                        data: {
+                            sreq: send,
+                            email: email
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            // Re-enable the button once the response is received
+                            if (response.res == 12) {
+                                $("#sendButton").prop("disabled", false);
+                            }
+                            // Process the response if needed
+                        }
+                    });
+                });
+
+
+
                 $('#registerButton').on('click', function(event) {
-                    event.preventDefault();
+                    event.preventDefault(); // Prevent the default form submission
 
                     var email = $('#email').val();
                     var rpassword = $('#rpassword').val();
@@ -374,7 +533,7 @@ require 'sessionstart.php';
 
                     if (email && rpassword && name && contact) {
                         $.ajax({
-                            url: 'valid.php',
+                            url: 'validation.php',
                             method: 'POST',
                             data: {
                                 email: email,
@@ -390,15 +549,16 @@ require 'sessionstart.php';
                                     $('#passwordSection').hide();
                                     $('#nameSection').hide();
                                     $('#emailSection').show();
-                                    $('#email').focus();
+                                    $('#email').focus(); // Redirect to the target page
+                                    // Redirect to the target page if registration is successful
                                     // window.location.href = 'main.php';
                                 } else {
-                                    removeErrorMessages();
+                                    removeErrorMessages(); // Remove existing error messages
                                     $('.modal-body').prepend('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
                                 }
                             },
                             error: function() {
-                                removeErrorMessages();
+                                removeErrorMessages(); // Remove existing error messages
                                 $('.modal-body').prepend('<div class="alert alert-danger" role="alert">An error occurred. Please try again later.</div>');
                             }
                         });
@@ -408,6 +568,7 @@ require 'sessionstart.php';
             });
         </script>
     </main>
+    <?php require('footer.php') ?>
 </body>
 
 </html>

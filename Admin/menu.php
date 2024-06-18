@@ -48,6 +48,12 @@ $c_page = end($uri_segment);
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-users-gear"></i></div>
                         Users
                     </a>
+                    <a class="nav-link <?php if ($c_page == 'bookings.php') {
+                                            echo "active";
+                                        } ?>" href="bookings.php">
+                        <div class="sb-nav-link-icon"><i class="fa-regular fa-calendar"></i></div>
+                        Bookings
+                    </a>
                     <a class="nav-link <?php if ($c_page == 'services.php') {
                                             echo "active";
                                         } ?>" href="services.php">

@@ -27,6 +27,7 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" class="form" id="loginForm">
+                        <!-- Email Section -->
                         <div id="emailSection">
                             <div>
                                 <h3 class="heading">Sign Up/Sign In</h3>
@@ -40,6 +41,7 @@
                                 <button type="button" class="bttn" id="nextButton">Next</button>
                             </div>
                         </div>
+                        <!-- Name Section -->
                         <div id="nameSection" style="display: none;">
                             <div class="input">
                                 <label for="name">Enter your Name:</label>
@@ -55,17 +57,18 @@
                                 <button type="button" class="bttn" id="nextButton2">Next</button>
                             </div>
                         </div>
+                        <!-- Register Section -->
                         <div id="registerSection" style="display: none;">
                             <div class="input">
                                 <label for="rpassword">Enter your password:</label>
                                 <input type="password" class="ibox" name="rpassword" id="rpassword"
-                                    placeholder="Password" required>
+                                    placeholder="Password">
                             </div>
                             <div class="btn1">
                                 <button type="button" class="bttn" name="register" id="registerButton">Register</button>
-                                <!-- <input type="submit" class="bttn" name="ok" value=""> -->
                             </div>
                         </div>
+                        <!-- Password Section -->
                         <div id="passwordSection" style="display: none;">
                             <div class="input">
                                 <label for="password">Enter your password:</label>
@@ -79,6 +82,37 @@
                                 <input type="submit" class="bttn" name="ok" value="Sign In">
                             </div>
                         </div>
+                        <div id="otpSection" style="display: none;">
+                            <div>
+                                <h3 class="heading"> Please Verify Your Email</h3>
+                            </div>
+                            <label for="otp">Enter your One-Time-Password:</label><br>
+                            <div class="otpsec">
+                                <div class="input">
+                                    <input type="text" class="otp" name="otp[]" id="otp1" minlength="0" maxlength="1"
+                                        pattern="[0-9]{0,1}">
+                                    <input type="text" class="otp" name="otp[]" id="otp2" minlength="0" maxlength="1"
+                                        pattern="[0-9]{0,1}" disabled>
+                                    <input type="text" class="otp" name="otp[]" id="otp3" minlength="0" maxlength="1"
+                                        pattern="[0-9]{0,1}" disabled>
+                                    <input type="text" class="otp" name="otp[]" id="otp4" minlength="0" maxlength="1"
+                                        pattern="[0-9]{0,1}" disabled>
+                                    <input type="text" class="otp" name="otp[]" id="otp5" minlength="0" maxlength="1"
+                                        pattern="[0-9]{0,1}" disabled>
+                                    <input type="text" class="otp" name="otp[]" id="otp6" minlength="0" maxlength="1"
+                                        pattern="[0-9]{0,1}" disabled>
+                                    <span class="error-message" id="otpError"></span><br>
+                                </div>
+                                <div class="pbttn">
+                                    <button type="button" class="btn btn-dark pbtn" id="sendButton" name="sendButton"
+                                        value="send" style="position: relative; margin: auto;">Send</button>
+                                    <!-- <a class="pbtn" href="resend.php" style="margin-left: 30%;">Send</a> -->
+                                </div>
+                            </div>
+                            <div class="btn1">
+                                <button type="button" class="bttn" id="verifyButton">Verify</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -89,12 +123,75 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
     <script>
+        const otpInputs = document.querySelectorAll("#otpSection input");
+        const button = document.querySelector("#otpSection button");
+
+        // iterate over all otpInputs
+        otpInputs.forEach((input, index1) => {
+            input.addEventListener("keyup", (e) => {
+                const currentInput = input;
+                const nextInput = input.nextElementSibling;
+                const prevInput = input.previousElementSibling;
+
+                // if the value has more than one character then clear it
+                if (currentInput.value.length > 1) {
+                    currentInput.value = "";
+                    return;
+                }
+
+                // if the next input is disabled and the current value is not empty
+                // enable the next input and focus on it
+                if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+                    nextInput.removeAttribute("disabled");
+                    nextInput.focus();
+                }
+
+                // if the backspace key is pressed
+                if (e.key === "Backspace") {
+                    // If the current input is empty and there's a previous input, move focus to the previous input
+                    if (currentInput.value === "" && prevInput) {
+                        prevInput.focus();
+                    }
+                    // Clear the value of the current input
+                    currentInput.value = "";
+
+                    // Check if all otpInputs are empty
+                    const allInputsEmpty = Array.from(otpInputs).every(input => input.value === "");
+
+                    // Disable all otpInputs except the first if all inputs are empty
+                    if (allInputsEmpty) {
+                        otpInputs.forEach((input, index) => {
+                            if (index !== 0) {
+                                input.setAttribute("disabled", true);
+                            }
+                        });
+                    } else {
+                        // Enable all otpInputs
+                        otpInputs.forEach(input => input.removeAttribute("disabled"));
+                    }
+                }
+
+                // if the fourth input (which index number is 3) is not empty and has no disable attribute
+                // add active class to button, otherwise remove active class
+                if (!otpInputs[3].disabled && otpInputs[3].value !== "") {
+                    button.classList.add("active");
+                    return;
+                }
+                button.classList.remove("active");
+            });
+        });
+
+        //focus the first input which index is 0 on window load
+        window.addEventListener("load", () => otpInputs[0].focus());
+
         function isValidEmail(email) {
             // Regular expression for validating email format
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         }
         $(document).ready(function () {
+            $('#otpSection').hide();
+            // $('#loadingSection').hide();
             // Function to remove error messages
             function removeErrorMessages() {
                 $('.alert').remove(); // Remove existing error messages
@@ -133,6 +230,7 @@
                             email: email
                         },
                         success: function (response) {
+                            console.log(response);
                             if (response.res == 1) {
                                 $('#emailSection').hide();
                                 $('#passwordSection').show();
@@ -214,11 +312,58 @@
                         $('#registerButton').click(); // Trigger register button click event
                     } else if ($('#passwordSection').is(':visible')) {
                         $('#loginForm').submit(); // Submit the form for password section
+                    } else if ($('#loginForm').is(':visible')) {
+                        $('#loginForm').click(); // Submit the form for password section
                     }
                 }
             });
 
 
+            $('#verifyButton').on('click', function () {
+                // Retrieve the entered OTP values from the input fields
+                var otpValues = [];
+                $('.otp').each(function () {
+                    otpValues.push($(this).val());
+                });
+
+                // Join the OTP values into a single string
+                var otp = otpValues.join('');
+                var email = $('#email').val();
+                var password = $('#password').val(); // Corrected variable name to 'rpassword'
+
+                // Log the values for debugging
+                console.log("Email:", email);
+                console.log("OTP:", otp);
+
+                // Enable all OTP input fields
+                $('.otp').removeAttr('disabled');
+
+                // AJAX request to verify the OTP
+                $.ajax({
+                    url: 'valid.php', // Replace 'valid.php' with the actual backend URL for OTP verification
+                    method: 'POST',
+                    data: {
+                        email: email,
+                        password: password, // Corrected variable name to 'rpassword'
+                        otp: otp
+                    },
+                    success: function (response) {
+                        // Handle the response from the server
+                        console.log(response);
+                        if (response.res == 10) {
+                            // If OTP verification is successful, redirect to the main page or perform any other action
+                            window.location.href = 'main.php';
+                        } else {
+                            // If OTP verification fails, display an error message
+                            $('#otpError').text('Invalid OTP. Please try again.');
+                        }
+                    },
+                    error: function () {
+                        // Handle errors in the AJAX request
+                        $('#otpError').text('An error occurred while verifying the OTP. Please try again later.');
+                    }
+                });
+            });
 
 
             $('#loginForm').on('submit', function (event) {
@@ -241,6 +386,9 @@
                             if (response.res == 2) {
                                 // Redirect to the target page if login is successful
                                 window.location.href = 'main.php';
+                            } else if (response.res == 9) {
+                                $('#passwordSection').hide();
+                                $('#otpSection').show();
                             } else {
                                 // Display error message if login is unsuccessful
                                 removeErrorMessages();
@@ -256,6 +404,31 @@
             });
 
 
+
+            // $("#sendButton").click(function () {
+            $('#sendButton').on('click', function (event) {
+                // Disable the button to prevent multiple clicks
+                $(this).prop("disabled", true);
+                var email = $('#email').val();
+                var send = $('#sendButton').val();
+                // Make the AJAX request to PHP backend
+                $.ajax({
+                    url: "valid.php",
+                    type: "POST",
+                    data: {
+                        sreq: send,
+                        email: email
+                    },
+                    success: function (response) {
+                        console.log(response.res);
+                        // Re-enable the button once the response is received
+                        if (response.res == 12) {
+                            $("#sendButton").prop("disabled", false);
+                        }
+                        // Process the response if needed
+                    }
+                });
+            });
 
 
 

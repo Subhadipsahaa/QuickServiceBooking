@@ -68,6 +68,7 @@ require 'unsetpsession.php';
                                         <td>
                                             <form name="del<?php echo $i ?>" method="post" action="update.php">
                                                 <input type="hidden" name="uid" value="<?php echo $rec['u_id'];  ?>">
+                                                <input type="hidden" name="table" value="<?php echo "user";  ?>">
                                                 <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
                                             </form>
                                         </td>

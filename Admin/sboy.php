@@ -24,8 +24,9 @@ require 'unsetpsession.php';
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">All User</h2>
+                <h2 class="mt-4">All Service Boy</h2>
                 <div class="col-12">
+                    <a href="addsboy.php" class="btn btn-dark border-0 text-white">Add New Service Boy</a>
                     <table class="table table-bordered mt-5">
                         <thead>
                             <tr>
@@ -42,42 +43,56 @@ require 'unsetpsession.php';
                         </thead>
                         <tbody>
                             <?php
+                            $src1 = "SELECT * FROM services ";
+                            $rs1 = mysqli_query($conn, $src1) or die(mysqli_error($conn));
+                            if (mysqli_num_rows($rs1) > 0) {
+                                while ($rec1 = mysqli_fetch_assoc($rs1)) {
 
-                            $src = "SELECT * FROM serviceboys ";
-                            $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
-                            if (mysqli_num_rows($rs) > 0) {
+                                    $servicename = $rec1['service_name'];
+                                    $src = "SELECT * FROM serviceboys WHERE  service_name ='$servicename'";
+                                    $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
+                                    if (mysqli_num_rows($rs) > 0) {
 
-                                while ($rec = mysqli_fetch_assoc($rs)) {
+                                        while ($rec = mysqli_fetch_assoc($rs)) {
                             ?>
 
-                                    <tr>
-                                        <td><?php echo $rec['sboy_id'] ?></td>
-                                        <td><?php echo $rec['name'] ?></td>
-                                        <td><?php echo $rec['email'] ?></td>
-                                        <td><?php echo $rec['contact'] ?></td>
-                                        <td><?php echo $rec['service_name'] ?></td>
-                                        <!-- <td><?php //echo $rec['password'] ?></td> -->
-                                        <td>
-                                            <!-- <i class="fa-solid fa-bars"></i> -->
-                                            <form name="del<?php echo $i ?>" method="post" action="reviews.php">
-                                                <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
-                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-bars"></i></button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form name="del<?php echo $i ?>" method="post" action="#">
-                                                <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
-                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            </form></i>
-                                        </td>
-                                        <td>
-                                            <form name="del<?php echo $i ?>" method="post" action="delete/sboydelete.php">
-                                                <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
-                                                <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
-                                            </form></i>
-                                        </td>
-                                    </tr>
+                                            <tr>
+                                                <td><?php echo $rec['sboy_id'] ?></td>
+                                                <td><?php echo $rec['name'] ?></td>
+                                                <td><?php echo $rec['email'] ?></td>
+                                                <td><?php echo $rec['contact'] ?></td>
+                                                <td><?php echo $rec['service_name'] ?></td>
+                                                <!-- <td><?php //echo $rec['password'] 
+                                                            ?></td> -->
+                                                <td>
+                                                    <!-- <i class="fa-solid fa-bars"></i> -->
+                                                    <form name="del<?php echo $i ?>" method="post" action="reviews.php">
+                                                        <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                        <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-bars"></i></button>
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form name="del<?php echo $i ?>" method="post" action="#">
+                                                        <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                        <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                    </form></i>
+                                                </td>
+                                                <td>
+                                                    <form name="del<?php echo $i ?>" method="post" action="delete/sboydelete.php">
+                                                        <input type="hidden" name="sboyid" value="<?php echo $rec['sboy_id'];  ?>">
+                                                        <button type="submit" class="btn" style="width: 100%;height:100%;"><i class="fa-regular fa-trash-can" style="color: #f00000;"></i></button>
+                                                    </form></i>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <tr>
+                                            <td colspan="11" class="text-center"><?php echo "No record Found" ?></td>
+                                        </tr>
                                 <?php
+                                    }
                                 }
                             } else {
                                 ?>

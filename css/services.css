@@ -1,0 +1,46 @@
+.backicon {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.backicon:hover {
+    color: rgb(80, 79, 79);
+}
+
+.t1 {
+    width: 100%;
+
+}
+
+.trow {
+    height: 60px;
+}
+
+.photo {
+    width: 300px;
+    height: auto;
+}
+
+/* .beauty {
+    margin: 4px, 4px;
+    padding: 4px;
+    width: 100%;
+    height: 60vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
+    scroll-behavior: smooth;
+} */
+/* .div1{
+
+} */
+.star{
+    background-color: green;
+    padding: 5px;
+    border-radius: 30px;
+}
+td{
+    
+}

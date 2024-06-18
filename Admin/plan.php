@@ -23,7 +23,7 @@ require_once('sessionchecher.php');
         <main>
             <div class="container-fluid px-4">
                 <div>
-                    <h2 class="mt-4">Add New Service</h2>
+                    <h2 class="mt-4">Add New Category</h2>
                 </div>
                 <div class="col-12">
                     <div class="col-6">
@@ -51,28 +51,28 @@ require_once('sessionchecher.php');
                         <form name="frm" method="post"><!-- enctype="multipart/form-data" -->
                             <div class="form-group">
                                 <label for="p_name">Category Name</label>
-                                <input type="text" name="p_name" id="p_name" placeholder="Enter Catagory" class="form-control">
+                                <input type="text" name="p_name" id="p_name" placeholder="Enter Catagory" class="form-control" required>
                             </div>
-                            <div class="from-group">
+                            <!-- <div class="from-group">
                                 <label for="description">Description</label>
                                 <textarea rows="2" name="description" id="description" class="form-control" placeholder="Enter Description" required></textarea>
-                            </div>
+                            </div> -->
                             <div>
                                 <label for="price">Price</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">₹</span>
                                     </div>
-                                    <input type="text" name="price" id="price" class="form-control" placeholder="Enter Price" aria-label="Amount (to the nearest dollar)">
+                                    <input type="text" name="price" id="price" class="form-control" placeholder="Enter Price" aria-label="Amount (to the nearest dollar)" required>
                                 </div>
                             </div>
                             <?php
                             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 if (isset($_POST['ok'])) {
                                     $plans = $_POST['p_name'];
-                                    $description = $_POST['description'];
+                                    // $description = $_POST['description'];
                                     $price = $_POST['price'];
-                                    $sql = "INSERT INTO $tname (`plans`, `description`, `price`, `s_id`) VALUES ('$plans', ' $description', ' $price', '$s_id') ";
+                                    $sql = "INSERT INTO $tname (`plans`, `price`, `s_id`) VALUES ('$plans', ' $price', '$s_id') ";
                                     $res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
                                     if (isset($res)) {
                                         $_SESSION['add'] = 1;
@@ -92,7 +92,7 @@ require_once('sessionchecher.php');
                                                                                 if ($_SESSION['add'] == 1) {
                                                                                     echo " next";
                                                                                 }
-                                                                            } ?> Plan" class="btn btn-primary">
+                                                                            } ?> Plan" class="btn btn-dark">
                             </div>
 
                         </form>
@@ -103,7 +103,7 @@ require_once('sessionchecher.php');
                         ?>
                                     <form name="frm3" method="post">
                                         <div class="btn-group mt-3" role="group" div class="from-group mt-3" aria-label="Second group">
-                                            <input type="submit" name="done" value="Done" class="btn btn-primary">
+                                            <input type="submit" name="done" value="Done" class="btn btn-dark">
                                         </div>
                                         <?php
 

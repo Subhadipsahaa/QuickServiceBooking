@@ -1,0 +1,19 @@
+.div2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.div1 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.uphoto {
+    margin-top: 6vh;
+    width: 30vh;
+    height: 30vh;
+    border: 1px solid gray;
+    border-radius: 80%;
+}

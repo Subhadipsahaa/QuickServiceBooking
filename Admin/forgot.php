@@ -57,54 +57,7 @@ require 'sessionstart.php';
                     if ($adminid == $username) {
                         $to_email = $email;
                         $subject = "Forgot Password";
-                        $body = "<!DOCTYPE html>
-                        <html lang='en'>
-                        <head>
-                            <meta charset='UTF-8'>
-                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                            <title>Document</title>
-                            <style>
-                                *{
-                                    font-family: Arial, sans-serif;
-                                    /* font-size: 30px; */
-                                    padding: 0;
-                                }
-                                body{
-                                    padding: 0;
-                                    margin: 0;
-                                }
-                                .header{
-                                    width: 97%;
-                                    background-color: rgb(73, 70, 70);
-                                    font-size: 30px;
-                                    color: white;
-                                    text-align: center;
-                                    padding: 10px;
-                                }
-                                p{
-                                    font-size: 15px;
-                                }
-                                footer{
-                                    width: 97%;
-                                    background-color:rgb(73, 70, 70) ;
-                                    color: rgb(187, 184, 184);
-                                    padding: 10px;
-                                    font-size: 20px;
-                                    text-align: center;
-                                    position: absolute;
-                                    bottom: 0;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <h3 class='header'>Quick Service Booking</h3>
-                            <p>Hi, " . $adminid . "<br>We received a request from you that you had forgotten your password.<br>
-                                    <br>Here is your password :" . $vpassword . ".</p>
-                                    <footer>
-                                    Thanks You...
-                                </footer>
-                        </body>
-                        </html>
+                        $body = "boy
                         ";
                         $headers = "From: QuickServiceBooking<quickservicebooking.care@gmail.com>\r\n";
                         $headers .= "Reply-To: quickservicebooking.care@gmail.com\r\n";
