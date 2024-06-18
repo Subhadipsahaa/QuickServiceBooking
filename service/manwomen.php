@@ -19,7 +19,7 @@ require '../sessionstart.php';
 
 <body>
     <nav class="navbar navbar-light bg-light" style="box-shadow: 0 10px 10px -10px rgba(124, 124, 147, 0.3);">
-        <a class="navbar-brand" href="main.php">
+        <a class="navbar-brand" href="../main.php">
             <div class="backicon"><i class="fa-solid fa-arrow-left"></i></div>
         </a>
         <!-- <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping" style="color: black;"></i></a> -->
