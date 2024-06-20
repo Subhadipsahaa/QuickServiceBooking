@@ -22,7 +22,6 @@ require '../sessionstart.php';
         <a class="navbar-brand" href="../main.php">
             <div class="backicon"><i class="fa-solid fa-arrow-left"></i></div>
         </a>
-        <!-- <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping" style="color: black;"></i></a> -->
     </nav>
     <main>
 
@@ -30,62 +29,78 @@ require '../sessionstart.php';
             <h2 style="padding:8px;">Man & Women</h2>
             <div class="div1">
                 <!-- <div class="beauty"> -->
-                    <table class="t1">
-                        <div>
-                            <h3 style="background-color: #eee; padding:10px;padding-left:20px">Beauty</h3>
-                        </div>
+                <table class="t1">
+                    <div>
+                        <h3 style="background-color: #eee; padding:10px;padding-left:20px">Beauty</h3>
+                    </div>
+                    <?php
+                    $sql = "SELECT * FROM beauty ";
+                    $res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+                    ?>
+                    <tbody>
                         <?php
-                        $sql = "SELECT * FROM beauty ";
-                        $res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+                        if (mysqli_num_rows($res) > 0) {
+                            while ($reco = mysqli_fetch_assoc($res)) {
+
                         ?>
-                        <tbody>
-                            <?php
-                            if (mysqli_num_rows($res) > 0) {
-                                while ($reco = mysqli_fetch_assoc($res)) {
+                                <tr class="trow">
+                                    <td class="ptd"><img src="<?php echo $reco['img_loc'] ?>" alt="img" class="photo"></td>
+                                    <td>
+                                        <div class="star"><i class="fa-solid fa-star" style="color:white"></i></div>
+                                    </td>
+                                    <td><?php echo $reco['plans'] ?></td>
+                                    <td><?php echo $reco['price'] ?><br>
+                                        <form name="booking<?php echo $i ?>" action="booking.php" method="post">
+                                            <input type="hidden" name="page" value="<?php echo "manwomen.php";  ?>">
+                                            <input type="hidden" name="catag" value="<?php echo $reco['plans'];  ?>">
+                                            <input type="hidden" name="table" value="<?php echo "beauty";  ?>">
+                                            <button type="submit" class="btn bg-dark text-light" name="ok" style="width: 100%;height:100%;">Book Now </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                        <?php
 
-                            ?>
-                                    <tr class="trow">
-                                        <td scope="row"><img src="<?php echo $reco['img_loc'] ?>" alt="img" class="photo"></td>
-                                        <td><div class="star"><i class="fa-solid fa-star" style="color:white"></i></div></td>
-                                        <td><?php echo $reco['plans'] ?></td>
-                                        <td><?php echo $reco['price'] ?><br><a href="#" class="btn bg-dark text-light">Book Now</a></td>
-                                        <!-- <td></td> -->
-                                    </tr>
-                            <?php
-
-                                }
                             }
-                            ?>
-                        </tbody>
-                    </table>
+                        }
+                        ?>
+                    </tbody>
+                </table>
                 <!-- </div> -->
                 <table class="t1">
-                        <div>
-                            <h3 style="background-color: #eee; padding:10px;padding-left:20px">Salon</h3>
-                        </div>
+                    <div>
+                        <h3 style="background-color: #eee; padding:10px;padding-left:20px">Salon</h3>
+                    </div>
+                    <?php
+                    $sql = "SELECT * FROM salon ";
+                    $res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+                    $i = 1;
+                    ?>
+                    <tbody>
                         <?php
-                        $sql = "SELECT * FROM salon ";
-                        $res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+                        if (mysqli_num_rows($res) > 0) {
+                            while ($reco = mysqli_fetch_assoc($res)) {
+
                         ?>
-                        <tbody>
-                            <?php
-                            if (mysqli_num_rows($res) > 0) {
-                                while ($reco = mysqli_fetch_assoc($res)) {
+                                <tr class="trow">
+                                    <td class="ptd"><img src="<?php echo $reco['img_loc'] ?>" alt="img" class="photo"></td>
+                                    <td><?php echo $reco['plans'] ?></td>
+                                    <td><?php echo $reco['price'] ?><br>
+                                        <form name="booking<?php echo $i ?>" method="post" action="booking.php">
+                                            <input type="hidden" name="page" value="<?php echo 'manwomen.php';  ?>">
+                                            <input type="hidden" name="catag" value="<?php echo $reco['plans'];  ?>">
+                                            <input type="hidden" name="table" value="<?php echo "salon";  ?>">
+                                            <button type="submit" class="btn bg-dark text-light" style="width: 100%;height:100%;">Book Now </button>
+                                        </form>
+                                    </td>
+                                    <!-- <td></td> -->
+                                </tr>
+                        <?php
 
-                            ?>
-                                    <tr class="trow">
-                                        <td scope="row"><img src="<?php echo $reco['img_loc'] ?>" alt="img" class="photo"></td>
-                                        <td><?php echo $reco['plans'] ?></td>
-                                        <td><?php echo $reco['price'] ?><br><a href="#" class="btn bg-dark text-light">Book Now</a></td>
-                                        <!-- <td></td> -->
-                                    </tr>
-                            <?php
-
-                                }
                             }
-                            ?>
-                        </tbody>
-                    </table>
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
 
         </div>

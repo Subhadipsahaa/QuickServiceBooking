@@ -1,6 +1,9 @@
 <?php
 require 'Admin/dbcon.php';
 require 'sessionstart.php';
+$uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri_segment = explode("/", $uri_path);
+$c_page = end($uri_segment);
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -116,9 +119,6 @@ require 'sessionstart.php';
         border-radius: 50px;
         margin-bottom: -5px;
         font-size: 15px;
-        /* position: absolute;
-    right: 37vh;
-    top: 10px; */
     }
 
     .icon1 {
@@ -132,12 +132,32 @@ require 'sessionstart.php';
         border-radius: 10px;
         text-wrap: normal;
     }
+
+    .back {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        font-size: 20px;
+        color: black;
+    }
+
+    .back:hover {
+        color: rgb(80, 79, 79);
+    }
+    .landmark{
+        display: flex;
+        flex-direction: row;
+    }
+.addele{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
 </style>
 
 <?php
 if (isset($_SESSION['muser'])) {
     $uemail_id = $_SESSION['muser'];
-    $src2 = "SELECT u_id ,name ,contact ,area ,city ,dist ,state ,pin,landmark FROM user WHERE  email='$uemail_id'";
+    $src2 = "SELECT * FROM user WHERE  email='$uemail_id'";
     $rs2 = mysqli_query($conn, $src2) or die(mysqli_error($conn));
     if (mysqli_num_rows($rs2) > 0) {
         $rec2 = mysqli_fetch_assoc($rs2);
@@ -147,71 +167,68 @@ if (isset($_SESSION['muser'])) {
 <div class="navwrapper">
     <nav class="navbar">
         <ul>
-            <!-- <li class="navele"><button type="button" class="nnavbtn"><img src="img/logo.png" alt="logopng" style="width: 150px; height: 55px;"></button></li> -->
-            <li class="navele"><button type="button" class="nnavbtn" style="position: absolute; left:5vh; top:5px"><a href="hello.html"><img src="img/logo.png" alt="logopng" style="width: 100px; height: 55px;"></a></button></li>
-            <!-- <li class="navele"><button type="button" class="nnavbtn">News</button></li>-->
             <?php
-            if (isset($_SESSION['muser'])) {
+            if ($c_page != "profile.php") {
             ?>
-                <!-- <li class="navele"><button type="button" class="nnavbtn"> -->
-                <!-- area 	city 	dist 	state 	pin 	landmark -->
-                <li class="navele" style="margin-right: 40%;">
+                <li class="navele"><button type="button" class="nnavbtn" style="position: absolute; left:5vh; top:5px"><a href="hello.html"><img src="img/logo.png" alt="logopng" style="width: 100px; height: 55px;"></a></button></li>
+                <?php
+                if (isset($_SESSION['muser'])) {
+                ?>
+                    <li class="navele" style="margin-right: 40%;">
 
-                    <div class="btn-group address">
-                        <button class="btn btn-black-50 btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" style="color:#6f6f6f;">
-                        <i class="fa-solid fa-location-dot"></i>
-                            <?php
-                            if ($rec2['area'] != null) {
-                            ?>
-                                <?php echo  " " . $rec2['city'] ?>
-                            <?php
-                            } else {
-                                echo " "."Please enter Address";
-                            }
-                            ?>
-                        </button>
-                        <div class="dropdown-menu" style="width: 100%; padding:10px;">
-                            <p>
+                        <div class="btn-group address">
+                            <button class="btn btn-black-50 btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" style="color:#6f6f6f;">
+                                <i class="fa-solid fa-location-dot"></i>
                                 <?php
                                 if ($rec2['area'] != null) {
-                                    echo $rec2['landmark'] . " " . $rec2['area'] . " " . $rec2['city'] . " " . $rec2['dist'] . " " . $rec2['state'] . " " . $rec2['pin'];
-                                } else {
-                                    echo "Add your Address";
                                 ?>
-                                    <i class="fa-solid fa-plus"></i>
+                                    <?php echo  " " . $rec2['city'] ?>
                                 <?php
+                                } else {
+                                    echo " " . "Please enter Address";
                                 }
                                 ?>
-                            </p>
+                            </button>
+                            <div class="dropdown-menu" style="width: 100%; padding:10px;">
+                                <p class="addr">
+                                <p class="addele"><strong>Landmark:</strong><span><?php if($rec2['landmark'] != null){ echo " ".$rec2['landmark'];} else{ echo "Empty";} ?></span></p>    
+                                <p class="addele"><strong>Area:</strong><span><?php if($rec2['area'] != null){ echo " ".$rec2['area'];} else{ echo "Empty";} ?></span></p>
+                                <p class="addele"><strong>City:</strong><span><?php if($rec2['city'] != null){ echo " ".$rec2['city'];} else{ echo "Empty";} ?></span></p>
+                                <p class="addele"><strong>District:</strong><span><?php if($rec2['dist'] != null){ echo " ".$rec2['dist'];} else{ echo "Empty";} ?></span></p>
+                                <p class="addele"><strong>State:</strong><span><?php if($rec2['state'] != null){ echo " ".$rec2['state'];} else{ echo "Empty";} ?></span></p>
+                                <p class="addele"><strong>PIN:</strong><span><?php if($rec2['pin'] != null){ echo " ".$rec2['pin'];} else{ echo "Empty";} ?></span></p>
+                                    
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                </li>
-                <!-- <button type="button" class="nnavbtn">Profile</button> -->
-                <!-- <li class='navele photo'>
-                        <i class="fa-solid fa-user icon1"></i>
-                         <img src="img/slide/img1.jpg" alt="" class="icon1">
-                        <</button> 
-                    </li> -->
-                <li class="navele">
-                    <a class=" dropdown-toggle nnavbtn" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="display:inline;">
-                        <span class='navele photo' style="position:absolute; top :-2px; right:105%;"><i class='fa-solid fa-user icon1'></i></span>
-                        <?php echo "Hi, " . $rec2['name']; ?>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="profile.php"><i class="fa-regular fa-user"></i> Profile</a>
-                        <a class="dropdown-item" href="#">Address</a>
-                        <a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
-                    </div>
+                    </li>
+                    <li class="navele">
+                        <a class=" dropdown-toggle nnavbtn" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="display:inline;">
+                            <span class='navele photo' style="position:absolute; top :-2px; right:105%;"><i class='fa-solid fa-user icon1'></i></span>
+                            <?php echo "Hi, " . $rec2['name']; ?>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="profile.php"><i class="fa-regular fa-user"></i> Profile</a>
+                            <a class="dropdown-item" href="#"><i class="fa-solid fa-calendar-days"></i> Bookings</a>
+                            <a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
+                        </div>
 
+                    <?php
+                } else {
+                    ?>
+                        <button type="button" class="lnnavbtn" data-toggle="modal" data-target="#exampleModal" style="border: 1px solid gray; border-radius:7px;">Log in</button>
+                    </li>
                 <?php
+                }
             } else {
                 ?>
-                    <button type="button" class="lnnavbtn" data-toggle="modal" data-target="#exampleModal" style="border: 1px solid gray; border-radius:7px;">Log in</button>
-                <?php
+                <a class="back" href="main.php">
+                    <div class="backicon"><i class="fa-solid fa-arrow-left"></i></div>
+                </a>
+            <?php
             }
-                ?>
-                </li>
+            ?>
         </ul>
     </nav>
 </div>

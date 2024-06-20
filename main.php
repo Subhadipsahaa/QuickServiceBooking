@@ -39,18 +39,9 @@
                         </div>
                         <div>
                             <p class="itemname">Women & Men</p>
-                            <!-- 's Salon & Spa -->
                         </div>
                     </div>
                 </a>
-                <!-- <div class="seritem">
-                <div class="iconwrap"> <img src="img\service_icons\man.jpeg" alt="icon.png" class="sicon">
-                </div>
-                <div>
-                    <p class="itemname">Men</p> -->
-                <!-- 's Salon & Massage -->
-                <!-- </div>
-            </div> -->
                 <div class="seritem">
                     <div class="iconwrap"> <img src="img\service_icons\clean.jpeg" alt="icon.png" class="sicon">
                     </div>
@@ -77,7 +68,6 @@
                     </div>
                     <div>
                         <p class="itemname">Electrician, Plumber & Carpenter</p>
-                        <!-- Electrician, Plumber & Carpenter -->
                     </div>
                 </div>
             </div>
@@ -112,7 +102,11 @@
                 <div class="worker">
                     <img class="workerphoto" src="img/worker/img5.jpg">
                     <div class="middle">
-                        <div class="text">Cleaning</div>
+                        <div class="text">
+                            <p class="servicename">Cleaning</p>
+                            <br>
+                            <a class="btn btn-dark" href="#" style="width: 15vh;">Book Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
