@@ -42,7 +42,7 @@ require 'unsetpsession.php';
                         </thead>
                         <tbody>
                             <?php
-                            $src = "SELECT * FROM bookings";
+                            $src = "SELECT * FROM bookings ORDER BY b_id DESC";
                             $rs = mysqli_query($conn, $src) or die(mysqli_error($conn));
                             if (mysqli_num_rows($rs) > 0) {
 
@@ -64,7 +64,10 @@ require 'unsetpsession.php';
                                                 echo "Pending";
                                             } elseif ($rec['s_status'] == 1) {
                                                 echo "Completed";
-                                            } ?></td>
+                                            }else{
+                                                echo "Canceled";
+                                            }
+                                             ?></td>
                                     </tr>
                                 <?php
                                 }

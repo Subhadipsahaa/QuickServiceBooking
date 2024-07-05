@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $res = 1;
 ?>
             <script>
-                window.location.href = "plan.php";
+                window.location.href = "profile.php";
             </script>
         <?php
         } else {
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // echo $message;
         ?>
             <script>
-                window.location.href = "plan.php";
+                window.location.href = "profile.php";
             </script>
         <?php
         }
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // echo $message;
         ?>
         <script>
-            window.location.href = "plan.php";
+            window.location.href = "profile.php";
         </script>
 <?php
     }

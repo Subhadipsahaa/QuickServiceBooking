@@ -17,7 +17,8 @@ require 'Admin/dbcon.php';
 <body>
     <?php require 'menu.php' ?>
     <div class="pcontainer">
-        <h2>User Profile</h2>
+        <img src="img/profile.png" alt="Profile" style="    display: block;margin-left: auto;margin-right: auto; width: 25%;">
+        <h2 style="text-align: center;">User Profile</h2>
         <form id="profileForm" method="post" action="update.php">
             <div class="form-group">
                 <label for="name">Name:</label><br>

@@ -33,7 +33,7 @@ input[type="password"] {
     border-radius: 4px;
 }
 
-.edit-button{
+.edit-button {
     background-color: transparent;
 }
 
@@ -51,11 +51,11 @@ input[type="password"] {
     background-color: #dadada;
 }
 
-.input{
+.input {
     display: inline-flex;
     width: 100%;
 }
 
-input{
+input {
     width: 80%;
 }

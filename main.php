@@ -1,7 +1,3 @@
-<?php
-// require 'Admin/dbcon.php';
-// require 'sessionstart.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +9,29 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <title>Document</title>
+    <style>
+        .searchdiv {
+            width: 100%;
+            margin: auto;
+            padding: 8px;
+            padding-left: 0px;
+            padding-right: 0px;
+            border-radius: 40px;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .sele {
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .ulist {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 
 </head>
 
@@ -21,14 +40,18 @@
         <?php require 'menu.php' ?>
         <div class="divbox">
             <div class="imgslider">
-                <form class="searchsection">
-                    <div class="icon">
-                        <i class="fa-solid fa-magnifying-glass sericon"></i>
-                    </div>
-                    <input class="sinput" type="search" placeholder="Search Services" aria-label="Search">
-                    <button class="sbtn" type="submit">Search</button>
+                <div class="searchdiv">
+                    <form class="searchsection" method="post" action="srout.php">
+                        <div class="icon">
+                            <i class="fa-solid fa-magnifying-glass sericon"></i>
+                        </div>
+                        <input id="searchInput" class="sinput" name="searchInput" type="text" placeholder="Search Services">
 
-                </form>
+                        <button class="sbtn" type="submit">Search</button>
+
+                    </form>
+                    <div id="suggestions"></div>
+                </div>
             </div>
         </div>
         <div class="divservices">
@@ -42,73 +65,89 @@
                         </div>
                     </div>
                 </a>
-                <div class="seritem">
-                    <div class="iconwrap"> <img src="img\service_icons\clean.jpeg" alt="icon.png" class="sicon">
+                <a href="service/others2.php?input=cleaner" class="servicebtn">
+                    <div class="seritem">
+                        <div class="iconwrap"> <img src="img\service_icons\clean.jpeg" alt="icon.png" class="sicon">
+                        </div>
+                        <div>
+                            <p class="itemname"> Cleaning</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="itemname"> Cleaning</p>
+                </a>
+                <a href="service/appliancerepair.php" class="servicebtn">
+                    <div class="seritem">
+                        <div class="iconwrap"> <img src="img\service_icons\applince.jpeg" alt="icon.png" class="sicon">
+                        </div>
+                        <div>
+                            <p class="itemname"> Appliance Repair</p>
+                        </div>
                     </div>
-                </div>
-                <div class="seritem">
-                    <div class="iconwrap"> <img src="img\service_icons\applince.jpeg" alt="icon.png" class="sicon">
+                </a>
+                <a href="service/electricianpage.php" class="servicebtn">
+                    <div class="seritem">
+                        <div class="iconwrap"> <img src="img\service_icons\electrician.jpeg" alt="icon.png" class="sicon">
+                        </div>
+                        <div>
+                            <p class="itemname">Electrician</p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="itemname"> Appliance Repair</p>
+                </a>
+                <a href="service/others.php" class="servicebtn">
+                    <div class="seritem">
+                        <div class="iconwrap"> <img src="img\service_icons\other.jpeg" alt="icon.png" class="sicon">
+                        </div>
+                        <div>
+                            <p class="itemname">Electrician, Plumber & Carpenter</p>
+                        </div>
                     </div>
-                </div>
-                <div class="seritem">
-                    <div class="iconwrap"> <img src="img\service_icons\pinting.jpeg" alt="icon.png" class="sicon">
-                    </div>
-                    <div>
-                        <p class="itemname">Painting</p>
-                    </div>
-                </div>
-                <div class="seritem">
-                    <div class="iconwrap"> <img src="img\service_icons\other.jpeg" alt="icon.png" class="sicon">
-                    </div>
-                    <div>
-                        <p class="itemname">Electrician, Plumber & Carpenter</p>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="wrapserviceworker">
             <h3 class="workerheading">Most booked services</h3>
             <div class="serviceworker">
-                <div class="worker">
-                    <img class="workerphoto" src="img/worker/img1.jpg">
-                    <div class="middle">
-                        <div class="text">Carpainter</div>
-                    </div>
-                </div>
-                <div class="worker">
-                    <img class="workerphoto" src="img/worker/img2.jpg">
-                    <div class="middle">
-                        <div class="text">Plumber</div>
-                    </div>
-                </div>
-                <div class="worker">
-                    <img class="workerphoto" src="img/worker/img3.jpg">
-                    <div class="middle">
-                        <div class="text">Electricians</div>
-                    </div>
-                </div>
-                <div class="worker">
-                    <img class="workerphoto" src="img/worker/img4.jpg">
-                    <div class="middle">
-                        <div class="text">Car Mechanic</div>
-                    </div>
-                </div>
-                <div class="worker">
-                    <img class="workerphoto" src="img/worker/img5.jpg">
-                    <div class="middle">
-                        <div class="text">
-                            <p class="servicename">Cleaning</p>
-                            <br>
-                            <a class="btn btn-dark" href="#" style="width: 15vh;">Book Now</a>
+                <a href="service/others2.php?input=carpainter" style="padding: 5px; padding-left:0px;">
+                    <div class="worker">
+                        <img class="workerphoto" src="img/worker/img1.jpg">
+                        <div class="middle">
+                            <div class="text">Carpainter</div>
                         </div>
                     </div>
-                </div>
+                    <a>
+                        <a href="service/others2.php?input=plumber" style="padding: 5px;">
+                            <div class="worker">
+                                <img class="workerphoto" src="img/worker/img2.jpg">
+                                <div class="middle">
+                                    <div class="text">Plumber</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="service/others2.php?input=electricians" style="padding: 5px;">
+                            <div class="worker">
+                                <img class="workerphoto" src="img/worker/img3.jpg">
+                                <div class="middle">
+                                    <div class="text">Electricians</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="service/others2.php?input=car_repair" style="padding: 5px;">
+                            <div class="worker">
+                                <img class="workerphoto" src="img/worker/img4.jpg">
+                                <div class="middle">
+                                    <div class="text">Car Mechanic</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="service/others2.php?input=cleaner" style="padding: 5px;padding-right:0px;">
+                            <div class="worker">
+                                <img class="workerphoto" src="img/worker/img5.jpg">
+                                <div class="middle">
+                                    <div class="text">
+                                        Cleaning
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
             </div>
         </div>
         <div>
@@ -203,13 +242,63 @@
                 </div>
             </div>
         </div>
+        <?php
+        if (isset($_SESSION['message'])) {
+        ?>
+            <script>
+                var massagep = "<?php echo $_SESSION['message']; ?>";
+                if (massagep != null) {
+                    alert(massagep);
+                    massagep = null;
+                }
+            </script>
+        <?php
+            unset($_SESSION['message']);
+        }
+        ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 
         <script>
+            $(document).ready(function() {
+                $('#searchInput').keyup(function() {
+                    var query = $(this).val().trim();
+
+                    if (query.length > 0) {
+                        $.ajax({
+                            url: 'search.php',
+                            type: 'GET',
+                            data: {
+                                query: query
+                            },
+                            success: function(data) {
+                                console.log(data); // Log response for debugging
+                                $('#suggestions').fadeIn();
+                                $('#suggestions').html(data);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error fetching suggestions:', error);
+                            }
+                        });
+                    } else {
+                        $('#suggestions').fadeOut();
+                        $('#suggestions').html("");
+                    }
+                });
+                $(document).on('click', '#sli', function() {
+                    $('#searchInput').val($(this).text());
+                    $('#suggestions').fadeOut();
+                })
+            });
+        </script>
+
+        <script>
             const otpInputs = document.querySelectorAll("#otpSection input");
             const button = document.querySelector("#otpSection button");
+
+
+
 
             // iterate over all otpInputs
             otpInputs.forEach((input, index1) => {

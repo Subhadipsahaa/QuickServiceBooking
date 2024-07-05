@@ -1,6 +1,5 @@
 <?php
 require '../Admin/dbcon.php';
-require '../sessionstart.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +27,6 @@ require '../sessionstart.php';
         <div class="catagoris">
             <h2 style="padding:8px;">Man & Women</h2>
             <div class="div1">
-                <!-- <div class="beauty"> -->
                 <table class="t1">
                     <div>
                         <h3 style="background-color: #eee; padding:10px;padding-left:20px">Beauty</h3>
@@ -45,15 +43,38 @@ require '../sessionstart.php';
                         ?>
                                 <tr class="trow">
                                     <td class="ptd"><img src="<?php echo $reco['img_loc'] ?>" alt="img" class="photo"></td>
-                                    <td>
-                                        <div class="star"><i class="fa-solid fa-star" style="color:white"></i></div>
+                                    <td style="padding: 15px;">
+                                        <div class="star"><i class="fa-solid fa-star sticon" style="color:white"></i>
+
+                                            <?php
+                                            $splan = $reco['plans'];
+                                            $sql11 = "SELECT * FROM reviews WHERE service_name = '$splan'";
+                                            $res11 = mysqli_query($conn, $sql11) or die(mysqli_error($conn));
+
+                                            if (mysqli_num_rows($res11) > 0) {
+                                                $totalRating = 0;
+                                                $numRatings = 0;
+
+                                                while ($row = mysqli_fetch_assoc($res11)) {
+                                                    $totalRating += $row['rating'];
+                                                    $numRatings++;
+                                                }
+                                                $averageRating = $totalRating / $numRatings;
+
+                                                echo round($averageRating, 2);
+                                            } else {
+                                                echo 0;
+                                            }
+                                            ?>
+
+                                        </div>
                                     </td>
                                     <td><?php echo $reco['plans'] ?></td>
                                     <td><?php echo $reco['price'] ?><br>
                                         <form name="booking<?php echo $i ?>" action="booking.php" method="post">
                                             <input type="hidden" name="page" value="<?php echo "manwomen.php";  ?>">
                                             <input type="hidden" name="catag" value="<?php echo $reco['plans'];  ?>">
-                                            <input type="hidden" name="table" value="<?php echo "beauty";  ?>">
+                                            <input type="hidden" name="table" value="<?php echo "Beauty";  ?>">
                                             <button type="submit" class="btn bg-dark text-light" name="ok" style="width: 100%;height:100%;">Book Now </button>
                                         </form>
                                     </td>
@@ -65,7 +86,6 @@ require '../sessionstart.php';
                         ?>
                     </tbody>
                 </table>
-                <!-- </div> -->
                 <table class="t1">
                     <div>
                         <h3 style="background-color: #eee; padding:10px;padding-left:20px">Salon</h3>
@@ -83,12 +103,39 @@ require '../sessionstart.php';
                         ?>
                                 <tr class="trow">
                                     <td class="ptd"><img src="<?php echo $reco['img_loc'] ?>" alt="img" class="photo"></td>
+                                    <td style="padding: 15px;">
+                                        <div class="star"><i class="fa-solid fa-star sticon" style="color:white"></i>
+
+                                            <?php
+                                            $splan = $reco['plans'];
+                                            $sql11 = "SELECT * FROM reviews WHERE service_name = '$splan'";
+                                            $res11 = mysqli_query($conn, $sql11) or die(mysqli_error($conn));
+
+                                            if (mysqli_num_rows($res11) > 0) {
+                                                $totalRating = 0;
+                                                $numRatings = 0;
+
+                                                while ($row = mysqli_fetch_assoc($res11)) {
+                                                    $totalRating += $row['rating'];
+                                                    $numRatings++;
+                                                }
+                                                $averageRating = $totalRating / $numRatings;
+
+                                                echo round($averageRating, 2);
+                                            } else {
+                                                echo 0;
+                                            }
+
+                                            ?>
+
+                                        </div>
+                                    </td>
                                     <td><?php echo $reco['plans'] ?></td>
                                     <td><?php echo $reco['price'] ?><br>
                                         <form name="booking<?php echo $i ?>" method="post" action="booking.php">
                                             <input type="hidden" name="page" value="<?php echo 'manwomen.php';  ?>">
                                             <input type="hidden" name="catag" value="<?php echo $reco['plans'];  ?>">
-                                            <input type="hidden" name="table" value="<?php echo "salon";  ?>">
+                                            <input type="hidden" name="table" value="<?php echo "Salon";  ?>">
                                             <button type="submit" class="btn bg-dark text-light" style="width: 100%;height:100%;">Book Now </button>
                                         </form>
                                     </td>

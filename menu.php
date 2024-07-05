@@ -1,14 +1,21 @@
 <?php
 require 'Admin/dbcon.php';
-require 'sessionstart.php';
 $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri_segment = explode("/", $uri_path);
 $c_page = end($uri_segment);
+?>
+<?php
+if ($c_page == "main.php" || $c_page == "manwomwn.php") {
+    require 'sessionstart.php';
+} else {
+    require 'sessionchecker.php';
+}
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <style>
+
     .navwrapper {
         height: 65px;
         /* margin-top: 20px; */
@@ -20,7 +27,7 @@ $c_page = end($uri_segment);
         position: sticky;
         top: 0px;
 
-
+        z-index: 1000;
     }
 
     ul {
@@ -144,14 +151,25 @@ $c_page = end($uri_segment);
     .back:hover {
         color: rgb(80, 79, 79);
     }
-    .landmark{
+
+    .addr {
         display: flex;
         flex-direction: row;
     }
-.addele{
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
+
+    .addele {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #6f6f6f;
+    }
+
+    .dropdown-item:active{
+        background-color: #6f6f6f;
+    }
+
+    .addrbtn:focus{
+        box-shadow: 0 4px 6px rgba(176, 176, 176, 0.18), 0 -4px 6px rgba(176, 176, 176, 0.18), 4px 0 6px rgba(176, 176, 176, 0.18), -4px 0 6px rgba(176, 176, 176, 0.18);
+    }
 </style>
 
 <?php
@@ -170,14 +188,18 @@ if (isset($_SESSION['muser'])) {
             <?php
             if ($c_page != "profile.php") {
             ?>
-                <li class="navele"><button type="button" class="nnavbtn" style="position: absolute; left:5vh; top:5px"><a href="hello.html"><img src="img/logo.png" alt="logopng" style="width: 100px; height: 55px;"></a></button></li>
+                <li class="navele"><button type="button" class="nnavbtn" style="position: absolute; left:5vh; top:5px"><a href="<?php if ($c_page == "booking.php") {
+                                                                                                                                    echo "../";
+                                                                                                                                } ?>hello.html"><img src="<?php if ($c_page == "booking.php") {
+                                                                                                                                                                echo "../";
+                                                                                                                                                            } ?>img/logo.png" alt="logopng" style="width: 100px; height: 55px;"></a></button></li>
                 <?php
                 if (isset($_SESSION['muser'])) {
                 ?>
                     <li class="navele" style="margin-right: 40%;">
 
                         <div class="btn-group address">
-                            <button class="btn btn-black-50 btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" style="color:#6f6f6f;">
+                            <button class="btn btn-black-50 btn-lg dropdown-toggle addrbtn" type="button" data-toggle="dropdown" aria-expanded="false" style="color:#6f6f6f;">
                                 <i class="fa-solid fa-location-dot"></i>
                                 <?php
                                 if ($rec2['area'] != null) {
@@ -191,13 +213,43 @@ if (isset($_SESSION['muser'])) {
                             </button>
                             <div class="dropdown-menu" style="width: 100%; padding:10px;">
                                 <p class="addr">
-                                <p class="addele"><strong>Landmark:</strong><span><?php if($rec2['landmark'] != null){ echo " ".$rec2['landmark'];} else{ echo "Empty";} ?></span></p>    
-                                <p class="addele"><strong>Area:</strong><span><?php if($rec2['area'] != null){ echo " ".$rec2['area'];} else{ echo "Empty";} ?></span></p>
-                                <p class="addele"><strong>City:</strong><span><?php if($rec2['city'] != null){ echo " ".$rec2['city'];} else{ echo "Empty";} ?></span></p>
-                                <p class="addele"><strong>District:</strong><span><?php if($rec2['dist'] != null){ echo " ".$rec2['dist'];} else{ echo "Empty";} ?></span></p>
-                                <p class="addele"><strong>State:</strong><span><?php if($rec2['state'] != null){ echo " ".$rec2['state'];} else{ echo "Empty";} ?></span></p>
-                                <p class="addele"><strong>PIN:</strong><span><?php if($rec2['pin'] != null){ echo " ".$rec2['pin'];} else{ echo "Empty";} ?></span></p>
-                                    
+                                <p class="addele"><strong>Landmark:</strong><span>
+                                        <?php if ($rec2['landmark'] != null) {
+                                            echo " " . $rec2['landmark'];
+                                        } else {
+                                            echo "Empty";
+                                        } ?></span></p>
+                                <p class="addele"><strong>Area:</strong><span>
+                                        <?php if ($rec2['area'] != null) {
+                                            echo " " . $rec2['area'];
+                                        } else {
+                                            echo "Empty";
+                                        } ?></span></p>
+                                <p class="addele"><strong>City:</strong><span>
+                                        <?php if ($rec2['city'] != null) {
+                                            echo " " . $rec2['city'];
+                                        } else {
+                                            echo "Empty";
+                                        } ?></span></p>
+                                <p class="addele"><strong>District:</strong><span>
+                                        <?php if ($rec2['dist'] != null) {
+                                            echo " " . $rec2['dist'];
+                                        } else {
+                                            echo "Empty";
+                                        } ?></span></p>
+                                <p class="addele"><strong>State:</strong><span>
+                                        <?php if ($rec2['state'] != null) {
+                                            echo " " . $rec2['state'];
+                                        } else {
+                                            echo "Empty";
+                                        } ?></span></p>
+                                <p class="addele"><strong>PIN:</strong><span>
+                                        <?php if ($rec2['pin'] != null) {
+                                            echo " " . $rec2['pin'];
+                                        } else {
+                                            echo "Empty";
+                                        } ?></span></p>
+
                                 </p>
                             </div>
                         </div>
@@ -209,9 +261,13 @@ if (isset($_SESSION['muser'])) {
                             <?php echo "Hi, " . $rec2['name']; ?>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="profile.php"><i class="fa-regular fa-user"></i> Profile</a>
-                            <a class="dropdown-item" href="#"><i class="fa-solid fa-calendar-days"></i> Bookings</a>
-                            <a class="dropdown-item" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
+                            <a class="dropdown-item" href="<?php if ($c_page == "booking.php") {
+                                                                echo "../";
+                                                            } ?>profile.php"><i class="fa-regular fa-user"></i> Profile</a>
+                            <a class="dropdown-item" href="userbooking.php"><i class="fa-solid fa-calendar-days"></i> Bookings</a>
+                            <a class="dropdown-item" href="<?php if ($c_page == "booking.php") {
+                                                                echo "../";
+                                                            } ?>logout.php"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
                         </div>
 
                     <?php

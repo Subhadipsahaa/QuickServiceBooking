@@ -29,7 +29,7 @@ require 'sessionstart.php';
                 <br>
                 <div class="form-group">
                     <label for="adminid">Enter Username</label>
-                    <input type="text" name="adminid" id="adminid" class="form-control" placeholder="Enter Your Username" required>
+                    <input type="text" name="adminid" id="adminid" class="form-control" placeholder="Enter Your Username" autofocus required>
                     <br>
                     <label for="passw">Enter Password</label>
                     <input type="password" name="passw" id="passw" class="form-control" placeholder="Enter Your Password" required>

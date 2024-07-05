@@ -107,7 +107,10 @@ img {
     background-color: white;
     display: flex;
     justify-content: center;
+    position: relative;
 }
+
+
 
 .sinput {
     width: 70%;
@@ -576,4 +579,18 @@ margin-right: -35px;
 .servicename {
     background-color: rgba(141, 141, 141, 0.298);
     padding: 8px;
+}
+
+#suggestions {
+    width: 47%;
+    height: auto;
+    position: absolute;
+    background-color: #b2b2b29e;
+    border: none;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+    margin-top: 13vh;
+    padding: 10px;
 }
