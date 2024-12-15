@@ -1,5 +1,6 @@
 <?php
-require '../Admin/dbcon.php';
+session_start(); // Start session to access session variables
+require '../Admin/dbcon.php'; // Include database connection file
 ?>
 
 <!DOCTYPE html>
@@ -20,11 +21,21 @@ require '../Admin/dbcon.php';
     <div class="container mt-5">
         <div class="col-6 border pt-5 pb-5 pl-5 pr-5 mx-auto div1 mb-5" style="width: 40%;">
             <div class="p-5 mb-2 mr-n5 ml-n5 mt-n5 bg-dark div2 text-center text-white">
-                <h2>Service Boy Log In</h2>
+                <h2>Service Verification</h2>
             </div>
 
-            <form class="frm" method="post" action="main.php">
+            <form class="frm" method="post" action="backend.php">
                 <br>
+                <?php
+                if (isset($_GET['error'])) {
+                    $error = $_GET['error'];
+                    if ($error === 'invalid_password') {
+                        echo '<div class="alert alert-danger" role="alert">Invalid password. Please try again.</div>';
+                    } elseif ($error === 'user_not_found') {
+                        echo '<div class="alert alert-danger" role="alert">User not found. Please check your credentials.</div>';
+                    }
+                }
+                ?>
                 <div class="form-group">
                     <label for="name">Enter Name:</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter Your Name" autofocus required>
@@ -34,10 +45,9 @@ require '../Admin/dbcon.php';
                 </div>
                 <br>
                 <div class="text-center">
-                    <input type="submit" name="ok" class="btn btn-dark btn-lg " value="Sign In">
+                    <input type="submit" name="submit" class="btn btn-dark btn-lg " value="Sign In">
                 </div>
                 <br>
-                <!-- <div><a href="register.php"></a></div> -->
             </form>
         </div>
     </div>

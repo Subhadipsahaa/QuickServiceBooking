@@ -16,9 +16,7 @@
                         Quick Service Booking
                     </h6>
                     <p>
-                        Here you can use rows and columns to organize your footer
-                        content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit.
+                    Streamline your life with our on-demand service booking platform. Whether it's home maintenance or personal grooming, find reliable professionals with ease.
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -26,19 +24,14 @@
                 <hr class="w-100 clearfix d-md-none" />
 
                 <!-- Grid column -->
+                 
+
+
+ 
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
+                    <h6 class="text-uppercase mb-4 font-weight-bold">For partners</h6>
                     <p>
-                        <a class="text-dark">MDBootstrap</a>
-                    </p>
-                    <p>
-                        <a class="text-dark">MDWordPress</a>
-                    </p>
-                    <p>
-                        <a class="text-dark">BrandFlow</a>
-                    </p>
-                    <p>
-                        <a class="text-dark">Bootstrap Angular</a>
+                        <a class="text-dark" href="sboy/index.php">Service Boy Log In</a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -89,7 +82,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color:rgba(15, 14, 14, 0.84);height:8vh;">
-        <p class="text-white text-left">© 2020 Copyright:</p>
+        <p class="text-white text-left">© 2024 Copyright:</p>
         <!-- <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a> -->
     </div>
     <!-- Copyright -->

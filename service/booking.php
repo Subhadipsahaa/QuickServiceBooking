@@ -35,29 +35,29 @@ require '../Admin/dbcon.php';
                 <div class="info">
                     <h3><?php echo $reco['plans'] ?></h3>
                     <div class="star"><i class="fa-solid fa-star" style="color:white"></i>
-                    <span style="color:white;">
-                        <?php
-                        $splan = $reco['plans'];
-                        $sql11 = "SELECT * FROM reviews WHERE service_name = '$splan'";
-                        $res11 = mysqli_query($conn, $sql11) or die(mysqli_error($conn));
+                        <span style="color:white;">
+                            <?php
+                            $splan = $reco['plans'];
+                            $sql11 = "SELECT * FROM reviews WHERE service_name = '$splan'";
+                            $res11 = mysqli_query($conn, $sql11) or die(mysqli_error($conn));
 
-                        if (mysqli_num_rows($res11) > 0) {
-                            $totalRating = 0;
-                            $numRatings = 0;
+                            if (mysqli_num_rows($res11) > 0) {
+                                $totalRating = 0;
+                                $numRatings = 0;
 
-                            while ($row = mysqli_fetch_assoc($res11)) {
-                                $totalRating += $row['rating'];
-                                $numRatings++;
+                                while ($row = mysqli_fetch_assoc($res11)) {
+                                    $totalRating += $row['rating'];
+                                    $numRatings++;
+                                }
+                                $averageRating = $totalRating / $numRatings;
+
+                                echo round($averageRating, 2);
+                            } else {
+                                echo 0;
                             }
-                            $averageRating = $totalRating / $numRatings;
-
-                            echo round($averageRating, 2);
-                        } else {
-                            echo 0;
-                        }
-                        ?>
-                    </span>
-                </div>
+                            ?>
+                        </span>
+                    </div>
                     <div class="forms">
                         <form id="bookingForm" method="post" action="bookingbackend.php">
                             <div class="form-group">
@@ -87,6 +87,10 @@ require '../Admin/dbcon.php';
                 </div>
             </div>
         </main>
+        <div class="rev" style="border: #adadad45 solid 1px; box-shadow: 1px -5px 5px rgba(124, 124, 147, 0.3); margin-top:25px">
+            <?php require '../review.php' ?>
+        </div>
+
     <?php
     }
     ?>

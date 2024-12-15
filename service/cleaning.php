@@ -23,7 +23,7 @@ require '../Admin/dbcon.php';
             <div class="div1">
                 <table class="t1">
                     <div>
-                        <h3 style="background-color: #eee; padding:10px;padding-left:20px">Beauty</h3>
+                        <h3 style="background-color: #eee; padding:10px;padding-left:20px">Cleaning</h3>
                     </div>
                     <?php
                     $sql = "SELECT * FROM cleaner";

@@ -97,7 +97,7 @@
                         <div class="iconwrap"> <img src="img\service_icons\other.jpeg" alt="icon.png" class="sicon">
                         </div>
                         <div>
-                            <p class="itemname">Electrician, Plumber & Carpenter</p>
+                            <p class="itemname">Carpenter, Plumber & Car Repair</p>
                         </div>
                     </div>
                 </a>

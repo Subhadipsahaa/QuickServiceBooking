@@ -30,11 +30,9 @@ require '../Admin/dbcon.php';
     <main>
 
         <div class="catagoris">
-            <h2 style="padding:8px;">Others</h2>
+            <h2 style="padding:8px;">Carpenter, Plumber & Car Repair</h2>
             <div class="div1">
-            <div class="ser">
-                    <?php require 'electrician.php' ?>
-                </div>
+
                 <div class="ser">
                     <?php require 'plumber.php' ?>
                 </div>

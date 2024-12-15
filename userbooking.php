@@ -58,6 +58,31 @@ require 'Admin/dbcon.php';
             border-radius: 15px;
             padding: 20px;
         }
+
+        input[type="radio"] {
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            width: 0;
+            height: 0;
+            position: absolute;
+            opacity: 0;
+        }
+
+        /* Style the label to create custom appearance */
+        .custom-radio {
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* When radio button is checked, change appearance of the label */
+        input[type="radio"]:checked+.custom-radio {
+            border: 2px solid #6f6f6f;
+            box-shadow: 0 4px 6px rgba(176, 176, 176, 0.18), 0 -4px 6px rgba(176, 176, 176, 0.18), 4px 0 6px rgba(176, 176, 176, 0.18), -4px 0 6px rgba(176, 176, 176, 0.18);
+            /* background-color: #; */
+        }
     </style>
 </head>
 
@@ -84,8 +109,10 @@ require 'Admin/dbcon.php';
                 </thead>
                 <tbody>
                     <?php
+                    $i = 1;
                     // b_id 	u_id 	service_name 	category 	time 	date 	sed_time 	sed_date 	s_boy 	code 	s_status 	
                     while ($reco = mysqli_fetch_assoc($res)) {
+                        $i++;
                     ?>
                         <tr>
                             <td><?php echo $reco['b_id']; ?></td>
@@ -101,7 +128,7 @@ require 'Admin/dbcon.php';
                             <?php
                             } elseif ($reco['s_status'] == 1) {
                             ?>
-                                <td style="color: #155724;background-color: #d4edda;border-color: #c3e6cb;">
+                                <td style="color: #155724;background-color: #d4edda;border-color: #c3e6cb;" class="align-middle">
                                     Completed
                                 </td>
                             <?php
@@ -132,10 +159,84 @@ require 'Admin/dbcon.php';
 
                                     <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-pen-to-square"></i><br>Write Review
                                     </button>
+
                                 </td>
-                            <?php
-                            }
-                            ?>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" data-keyboard="true" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content divpop">
+                                            <div class="pheader">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <h3 class="heading">Review</h3>
+                                                </div>
+                                                <form method="post" class="form" name="rev<?php echo $i; ?>" id="loginForm">
+                                                    <div class="form-group">
+                                                        <label for="message-text" class="col-form-label">Review</label>
+                                                        <textarea class="form-control" id="message-text"></textarea>
+                                                    </div>
+                                                    <label>
+                                                        <input type="radio" name="option" value="5">
+                                                        <i class="fa-solid fa-face-smile-beam custom-radio" style="color: #2d830c; font-size:45px"></i>
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="option" value="4">
+                                                        <i class="fa-solid fa-face-smile custom-radio" style="color: #41d709; font-size:45px"></i>
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="option" value="3">
+                                                        <i class="fa-solid fa-face-meh custom-radio" style="color: #efe138; font-size:45px"></i>
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="option" value="2">
+                                                        <i class="fa-solid fa-face-frown-open custom-radio" style="color: #ff7d1e; font-size:45px"></i>
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="option" value="1">
+                                                        <i class="fa-solid fa-face-frown custom-radio" style="color: #ff1111; font-size:45px"></i>
+                                                    </label>
+                                                    
+                                                    <input type="submit" class="revbtn" value="Submit">
+                                                </form>
+                                                <?php
+                                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                                    // Get form data
+                                                    $review_text = $_POST['message-text'];
+                                                    $rating = $_POST['rating'];
+
+                                                    // Validate the data
+                                                    if (empty($review_text) || empty($rating)) {
+                                                        echo "Review text and rating are required.";
+                                                    } else {
+                                                        // Prepare an SQL statement to prevent SQL injection
+                                                        $stmt = $conn->prepare("INSERT INTO reviews (u_id, content, rating, time, date, sboy_id, service_name) VALUES (?, ?, ?, NOW(), CURDATE(), ?, ?)");
+
+                                                        // Bind parameters
+                                                        $u_id = 1; // Example user ID, replace with actual user ID
+                                                        $sboy_id = 1; // Example sboy ID, replace with actual sboy ID
+                                                        $service_name = 'Service Name'; // Example service name, replace with actual service name
+
+                                                        $stmt->bind_param("issi", $u_id, $review_text, $rating, $sboy_id, $service_name);
+
+                                                        // Execute the query
+                                                        if ($stmt->execute()) {
+                                                            echo "Review submitted successfully!";
+                                                        } else {
+                                                            echo "Error: " . $stmt->error;
+                                                        }
+
+                                                        // Close the statement
+                                                        $stmt->close();
+                                                    }
+                                                }
+                                                ?>
+
+                                            <?php
+                                        }
+                                            ?>
                         </tr>
                     <?php
                     }
@@ -152,51 +253,10 @@ require 'Admin/dbcon.php';
 
 
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" data-keyboard="true" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content divpop">
-                    <div class="pheader">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <h3 class="heading">Review</h3>
-                        </div>
-                        <form method="post" class="form" id="loginForm">
-                            <div class="form-group">
-                                <label for="message-text" class="col-form-label">Review</label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                            </div>
-                            <label>
-                                <input type="radio" name="option" value="1">
-                                <i class="fa-regular fa-star"></i>
-                            </label>
-                            <label>
-                                <input type="radio" name="option" value="2">
-                                <i class="fa-regular fa-star"></i>
-                            </label>
-                            <label>
-                                <input type="radio" name="option" value="3">
-                                <i class="fa-regular fa-star"></i>
-                            </label>
-                            <label>
-                                <input type="radio" name="option" value="4">
-                                <i class="fa-regular fa-star"></i>
-                            </label>
-                            <label>
-                                <input type="radio" name="option" value="5">
-                                <i class="fa-regular fa-star"></i>
-                            </label>
-                            <input type="submit" class="revbtn" value="Submit">
-                        </form>
-                        <?php
 
-                        ?>
-                    </div>
-                </div>
-            </div>
+        </div>
+        </div>
+        </div>
         </div>
 
 

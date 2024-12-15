@@ -24,7 +24,7 @@ require 'unsetpsession.php';
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h2 class="mt-4">All User</h2>
+                <h2 class="mt-4">All Reviews</h2>
                 <div class="col-12">
                     <table class="table table-bordered mt-5">
                         <thead>
